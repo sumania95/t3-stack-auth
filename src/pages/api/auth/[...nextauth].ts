@@ -68,13 +68,6 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
-    session: async ({ session, token }) => {
-      if (token) {
-        session.id = token.id;
-      }
-
-      return session;
-    },
   },
   jwt: {
     maxAge: 15 * 24 * 30 * 60, // 15 days

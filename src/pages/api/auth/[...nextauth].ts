@@ -38,24 +38,20 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: creds.email,
           }})
-          .then(async(user) => {
-            if (!user) {
-              return null;
-            }
-    
-            const isValidPassword = await verify(user.password, creds.password);
-    
-            if (!isValidPassword) {
-              return null;
-            }
-    
-            return {
-              id: user.id,
-              email: user.email,
-            };
-          })
-          .catch(err => {console.error(err)})
-          return null;
+          if (!user) {
+            return null;
+          }
+  
+          const isValidPassword = await verify(user.password, creds.password);
+  
+          if (!isValidPassword) {
+            return null;
+          }
+  
+          return {
+            id: user.id,
+            email: user.email,
+          };
       },
     }),
   ],

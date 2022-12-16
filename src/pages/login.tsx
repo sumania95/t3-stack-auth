@@ -5,7 +5,6 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { trpc } from "../utils/trpc";
 
 interface FormData {
     email: string;

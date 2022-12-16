@@ -28,21 +28,21 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials,request) =>{
-      const{email,password} = credentials as {email:string,password:string};
-      const user = await prisma.user.findFirst({where:{email:email}});
-      console.log(user)
-      
-      if(!user){
-        return null;
-      }
-      const invalidPassword = await verify(user.password,password);
-      console.log(invalidPassword)
-      if (!invalidPassword) {
-        return null;
-      }
-      const name = user.firstname + " " + user.lastname;
-      return {id: user.id,email: user.email, name: name} as any
+      authorize: async (credentials) =>{
+        const{email,password} = credentials as {email:string,password:string};
+        const user = await prisma.user.findFirst({where:{email:email}});
+        console.log(user)
+        
+        if(!user){
+          return null;
+        }
+        const invalidPassword = await verify(user.password,password);
+        console.log(invalidPassword)
+        if (!invalidPassword) {
+          return null;
+        }
+        const name = user.firstname + " " + user.lastname;
+        return {id: user.id,email: user.email, name: name} as any
       }
     }),
   ],

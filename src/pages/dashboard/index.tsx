@@ -5,7 +5,7 @@ import { requireAuth } from "../../server/common/requireAuth";
 
 export const getServerSideProps = requireAuth(async (ctx) => {
     return { props: {} };
-  });
+});
 
 const Dashboard: NextPage = () => {
     const { data } = useSession();

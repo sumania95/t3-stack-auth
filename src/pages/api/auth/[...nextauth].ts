@@ -8,6 +8,15 @@ import { prisma } from "../../../server/db/client";
 import { verify } from "argon2";
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    }
+  },
   session:{
     strategy:'jwt',
   },

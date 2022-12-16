@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           className="flex items-center justify-center h-screen w-full"
           onSubmit={(event)=>{
             event.preventDefault();
-                signIn("credentials", { ...data, redirect: false, callbackUrl: '/' })
+                signIn("credentials", { ...data, redirect: false })
                 .then((result) => {
                   if (result?.error === null) {
                     toast.success("Successfully signed in");

@@ -1,4 +1,6 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { z } from "zod";
+import { verify } from "argon2";
 
 export const authRouter = router({
   getSession: publicProcedure.query(({ ctx }) => {
@@ -7,17 +9,4 @@ export const authRouter = router({
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
-  // me:protectedProcedure.query(({ctx}) => {
-  //   const id:number = ctx.session.user.id;
-  //   const user = ctx.prisma.user.findFirst({ 
-  //     where: { id: id },
-  //     select: {
-  //       email: true,
-  //       firstname: true,
-  //       lastname: true,
-  //       role: true,
-  //     },
-  //   });
-  //   return user;
-  // }),
 });

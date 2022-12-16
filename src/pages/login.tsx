@@ -40,9 +40,7 @@ const Home: NextPage = () => {
                 toast.error("Invalid Email and Password");
                 return;
               }
-              setTimeout(()=>{ 
-                toast.success("Successfully signed in");
-              },400);
+              toast.success("Successfully signed in");
               router.push("/")
             }).catch((error) => {
               toast.error(error.message)

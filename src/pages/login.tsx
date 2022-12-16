@@ -33,19 +33,21 @@ const Home: NextPage = () => {
           className="flex items-center justify-center h-screen w-full"
           onSubmit={(event)=>{
             event.preventDefault();
-                signIn("credentials", { ...data, redirect: false })
-                .then((result) => {
-                  if (result?.error === null) {
-                    toast.success("Successfully signed in");
-                    router.push("/")
-                    return;
-                  }
-                  toast.error("Invalid Email and Password");
-
-                }).catch((error) => {
-                  toast.error(error.message)
-                })
-            }}>
+            signIn("credentials", { ...data, redirect: false })
+            .then((result) => {
+              console.log(result);
+              if (result?.error === "CredentialsSignin") {
+                toast.error("Invalid Email and Password");
+                return;
+              }
+              setTimeout(()=>{ 
+                toast.success("Successfully signed in");
+              },400);
+              router.push("/")
+            }).catch((error) => {
+              toast.error(error.message)
+            })
+          }}>
           <div className="p-2">
             <div className="flex flex-col items-center justify-center space-y-3 border p-2">
               <h2 className="p-2 border">Welcome back!</h2>

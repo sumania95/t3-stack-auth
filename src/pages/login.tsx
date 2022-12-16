@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { env } from "../env/server.mjs";
 
 interface FormData {
     email: string;
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
           className="flex items-center justify-center h-screen w-full"
           onSubmit={(event)=>{
             event.preventDefault();
-                signIn("credentials", { ...data, redirect: false })
+                signIn("credentials", { ...data, redirect: false, callbackUrl: env.NEXTAUTH_URL })
                 .then((result) => {
                   if (result?.error === null) {
                     toast.success("Successfully signed in");

@@ -73,6 +73,7 @@ const SignUp: NextPage = () => {
           }}
           >
           <div className="p-2">
+            <div className="h-1 bg-rose-500"></div>
             <div className="w-full flex flex-col items-center justify-center space-y-3 border p-10">
             <h2 className="p-4 m-2 text-3xl mb-5">Create New Account</h2>
               <div className="relative w-full pb-6">

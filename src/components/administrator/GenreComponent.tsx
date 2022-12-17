@@ -5,6 +5,10 @@ import Link from 'next/link';
 function GenreComponent() {
   const [search, setSearch] = useState("");
   const genres = trpc.genre.getAll.useQuery({genre:search});
+  console.log(genres.data);
+  if (genres.data){
+    console.log('has data')
+  }
 
   return (
     <main className='flex flex-col w-full space-y-3'>
@@ -36,19 +40,31 @@ function GenreComponent() {
                     </tr>
                 </thead>
                 <tbody>
-                    {genres.data?.result?.map((genre, i) => (
-                        <tr className="bg-white border-b" key={genre.id}>
-                            <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                {i+1}
-                            </th>
-                            <td className=" w-10/12 py-4 px-6">
-                                {genre.genre}
-                            </td>
-                            <td className="py-4 px-6">
-                                <a href="#" className="font-medium text-blue-600">Edit</a>
+                    {genres.data?.result?.length?
+                    <>
+                        {genres.data?.result?.map((genre, i) => (
+                            <tr className="bg-white border-b" key={genre.id}>
+                                <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                    {i+1}
+                                </th>
+                                <td className=" w-10/12 py-4 px-6">
+                                    {genre.genre}
+                                </td>
+                                <td className="py-4 px-6">
+                                    <a href="#" className="font-medium text-blue-600">Edit</a>
+                                </td>
+                            </tr>
+                        ))}
+                    </>
+                    :
+                    <>
+                        <tr className="bg-white border-b">
+                            <td className=" w-full py-4 px-6 text-center">
+                                No record found.
                             </td>
                         </tr>
-                    ))}
+                    </>
+                    }
                 </tbody>
             </table>
         </div>

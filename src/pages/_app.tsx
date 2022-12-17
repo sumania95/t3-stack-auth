@@ -19,10 +19,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        // pauseOnFocusLoss
         draggable
-        pauseOnHover
+        // pauseOnHover
         theme="light"
+        className="mt-12"
       />
     </SessionProvider>
   );

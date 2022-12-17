@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { toast } from 'react-toastify';
@@ -13,13 +13,41 @@ interface FormData {
 
 const Home: NextPage = () => {
   // const login = ;
-  
+  const [isloading, setLoading] = useState(false)
+  const router = useRouter()
+
   const [data, setData] = useState<FormData>({
     email: "",
     password: "",
   })
-  const router = useRouter();
 
+  const onSubmit = (event:any) =>{
+    event.preventDefault();
+    if (isloading) return;
+    setLoading(true);
+    signIn("credentials", { ...data, redirect: false })
+    .then((result) => {
+      if (result?.error === "CredentialsSignin") {
+        setTimeout(()=>{ 
+          toast.error("Invalid Email and Password");
+          setLoading(false);
+          console.log(isloading);
+        }, 400);
+        return;
+      }
+      setTimeout(()=>{ 
+          toast.success("Successfully signed in");
+          setLoading(false);
+          console.log(isloading);
+      }, 400);
+      router.push("/")
+    }).catch((error) => {
+      toast.error(error.message)
+      setLoading(false);
+      console.log(isloading);
+    })
+  }
+  
   return (
     <div>
       <Head>
@@ -32,19 +60,7 @@ const Home: NextPage = () => {
         <form
           className="flex items-center justify-center h-screen w-full"
           onSubmit={(event)=>{
-            event.preventDefault();
-            signIn("credentials", { ...data, redirect: false })
-            .then((result) => {
-              console.log(result);
-              if (result?.error === "CredentialsSignin") {
-                toast.error("Invalid Email and Password");
-                return;
-              }
-              toast.success("Successfully signed in");
-              router.push("/")
-            }).catch((error) => {
-              toast.error(error.message)
-            })
+            onSubmit(event)
           }}>
           <div className="p-2">
             <div className="flex flex-col items-center justify-center space-y-3 border p-2">
@@ -56,7 +72,6 @@ const Home: NextPage = () => {
                 value={data.email}
                 onChange={(e) => setData((data) => ({...data, email: e.target.value}))}
                 />
-
                 <input
                 type="text"
                 placeholder="Type your email..."
@@ -65,9 +80,16 @@ const Home: NextPage = () => {
                 onChange={(e) => setData((data) => ({...data, password: e.target.value}))}
                 />
               <div className="w-full flex items-center justify-center p-2">
+                {isloading?
+                <button className="bg-blue-800 text-white p-2 w-full disabled:opacity-80" disabled>
+                  Login
+                </button>
+                :
                 <button className="bg-blue-800 text-white p-2 w-full" type="submit">
                   Login
                 </button>
+                }
+                
               </div>
               <div className="w-full p-2">
                 <Link href="/register">

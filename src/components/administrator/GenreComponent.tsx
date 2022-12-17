@@ -16,7 +16,7 @@ function GenreComponent() {
                 value={search}
                 onChange={e => setSearch(e.target.value)} 
                 id="search" 
-                className='p-2 border focus:border-gray-300'
+                className='p-2 border focus:border-gray-300 outline-none'
                 placeholder='Search Record'
             />
         </div>

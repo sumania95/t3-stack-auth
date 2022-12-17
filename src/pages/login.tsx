@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-
+import { AiOutlineClose } from "react-icons/ai";
 interface FormData {
     email: string;
     password: string;
@@ -56,47 +56,79 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="relative">
+        <div className="absolute right-0 p-5 flex items-center justify-center">
+          <Link href={'/'}  className="p-4 border text-2xl hover:text-gray-700 text-gray-500"><AiOutlineClose></AiOutlineClose></Link>
+        </div>
         <form
           className="flex items-center justify-center h-screen w-full"
           onSubmit={(event)=>{
             onSubmit(event)
           }}>
           <div className="p-2">
-            <div className="flex flex-col items-center justify-center space-y-3 border p-2">
-              <h2 className="p-2 border">Welcome back!</h2>
-              <input
-                type="email"
-                placeholder="Type your email..."
-                className="p-2 border"
-                value={data.email}
-                onChange={(e) => setData((data) => ({...data, email: e.target.value}))}
-                />
+            <div className="w-full flex flex-col items-center justify-center space-y-3 border p-10">
+              <h2 className="p-4 m-2 text-3xl mb-5">Welcome back!</h2>
+              {/* <p className="px-2 text-left w-full">EMAIL</p> */}
+              <div className="relative w-full pb-6">
                 <input
-                type="text"
-                placeholder="Type your email..."
-                className="p-2 border"
-                value={data.password}
-                onChange={(e) => setData((data) => ({...data, password: e.target.value}))}
-                />
-              <div className="w-full flex items-center justify-center p-2">
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder=" "
+                  className="peer w-full text-xl placeholder-transparent outline-none border-b border-gray-300 focus:border-gray-600"
+                  value={data.email}
+                  onChange={(e) => setData((data) => ({...data, email: e.target.value}))}
+                  />
+                <label htmlFor="email" 
+                  className="absolute left-0 -top-6 text-sm text-gray-900
+                  peer-placeholder-shown:text-base
+                  peer-placeholder-shown:-top-1
+                  transition-all
+                  peer-focus:-top-6
+                  peer-focus:text-sm
+                  ">Email Address
+                </label>
+              </div>
+              <div className="relative w-full">
+                <input
+                    id="password"
+                    name="password"
+                    placeholder=" "
+                    type="password"
+                    className="peer w-full text-2xl placeholder-transparent outline-none border-b border-gray-300 focus:border-gray-600"
+                    value={data.password}
+                    onChange={(e) => setData((data) => ({...data, password: e.target.value}))}
+                    />
+                <label htmlFor="password" 
+                  className="absolute left-0 -top-6 text-sm text-gray-900
+                  peer-placeholder-shown:text-base
+                  peer-placeholder-shown:-top-1
+                  transition-all
+                  peer-focus:-top-6
+                  peer-focus:text-sm
+                  ">Password
+                </label>
+              </div>
+              <div className="w-full flex items-center justify-center pt-3">
                 {isloading?
-                <button className="bg-blue-800 text-white p-2 w-full disabled:opacity-80" disabled>
+                <button className="bg-blue-800 text-white px-2 py-3 w-full disabled:opacity-80" disabled>
                   Login
                 </button>
                 :
-                <button className="bg-blue-800 text-white p-2 w-full" type="submit">
+                <button className="bg-blue-800 text-white px-2 py-3 w-full" type="submit">
                   Login
                 </button>
                 }
                 
               </div>
-              <div className="w-full p-2">
-                <Link href="/register">
-                  <button className="p-2 bg-blue-800 text-white w-full" type="submit">
-                    Sign Up
-                  </button>
-                </Link>
+              <div className="w-full p-2 flex flex-col text-lg">
+                <div className="flex space-x-1">
+                  <p>Don't have an account yet?</p>
+                  <Link href="/register" className="underline underline-offset-2">Register here.</Link>
+                </div>
+                <div className="flex">
+                  <Link href="/register" className="underline underline-offset-2">Forgot your password?.</Link>
+                </div>
               </div>
             </div>
           </div>

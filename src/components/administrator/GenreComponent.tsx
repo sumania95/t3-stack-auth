@@ -3,9 +3,9 @@ import { trpc } from "../../utils/trpc";
 import Link from 'next/link';
 
 function GenreComponent() {
-  const [search, setSearch] = useState("Hip Hop");
+  const [search, setSearch] = useState("");
   const genres = trpc.genre.getAll.useQuery({genre:search});
-  
+
   return (
     <main className='flex flex-col w-full space-y-3'>
         <div className='flex flex-row items-center justify-between space-x-3'>

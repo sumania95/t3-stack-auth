@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { AiOutlineClose } from "react-icons/ai";
+import HeadCustom from "../components/HeadCustom";
+import Image from "next/image";
 interface FormData {
     email: string;
     password: string;
@@ -47,6 +48,7 @@ const Home: NextPage = () => {
   
   return (
     <div>
+      <HeadCustom title="Login"/>
       <main className="relative">
         <div className="absolute right-0 p-5 flex items-center justify-center">
           <Link href={'/'}  className="p-3 border bg-gray-50 text-2xl hover:text-gray-700 text-gray-500"><AiOutlineClose></AiOutlineClose></Link>
@@ -59,7 +61,6 @@ const Home: NextPage = () => {
           <div className="p-2">
             <div className="w-full flex flex-col items-center justify-center space-y-3 border p-10">
               <h2 className="p-4 m-2 text-3xl mb-5">Welcome back!</h2>
-              {/* <p className="px-2 text-left w-full">EMAIL</p> */}
               <div className="relative w-full pb-6">
                 <input
                   id="email"
@@ -102,11 +103,11 @@ const Home: NextPage = () => {
               </div>
               <div className="w-full flex items-center justify-center pt-3">
                 {isloading?
-                <button className="bg-blue-800 text-white px-2 py-3 w-full disabled:opacity-70" disabled>
-                  Login
+                <button className="flex items-center justify-center bg-blue-800 text-white px-2 py-3 w-full disabled:bg-blue-600" disabled>
+                  Login <Image alt="loading" src="/loading.svg" width={30} height={30} className='pl-2'/>
                 </button>
                 :
-                <button className="bg-blue-800 text-white px-2 py-3 w-full hover:opacity-90" type="submit">
+                <button className="bg-blue-800 text-white px-2 py-3 w-full hover:bg-blue-600" type="submit">
                   Login
                 </button>
                 }

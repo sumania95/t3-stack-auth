@@ -11,7 +11,7 @@ function GenreComponent() {
         <div className='flex flex-row items-center justify-between space-x-3'>
             <Link href="/user/administrator/genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
             <input 
-                type="text" 
+                type="search" 
                 name="search"
                 value={search}
                 onChange={e => setSearch(e.target.value)} 

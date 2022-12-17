@@ -13,6 +13,15 @@ datasource db {
   // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
 }
+
+
+model Genre {
+  id        String   @id @default(cuid())
+  genre     String? @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
    User
    Admin
@@ -28,3 +37,4 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+

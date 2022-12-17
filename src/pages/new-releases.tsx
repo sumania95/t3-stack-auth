@@ -5,7 +5,7 @@ import HeadCustom from '../components/HeadCustom'
 function NewRelease() {
   return (
     <>
-      <HeadCustom title="Home"/>
+      <HeadCustom title="New Releases"/>
       <Header />
       <main>
         New Releases

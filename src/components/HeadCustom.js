@@ -2,10 +2,11 @@ import React from 'react'
 import Head from "next/head";
 
 function HeadCustom({title}) {
+  const headtitle = `${title} | COMPANY NAME` 
   return (
     <div>
         <Head>
-            <title>{title} | COMPANY</title>
+            <title>{headtitle}</title>
             <meta name="description" content="Record Pool" />
             <link rel="icon" href="/favicon.ico" />
         </Head>

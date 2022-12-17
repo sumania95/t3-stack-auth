@@ -14,10 +14,10 @@ function Header() {
     <div className='sticky top-0 shadow-md bg-white h-16 flex items-center justify-between px-5'>
         <Link href={'/'}>LOGO</Link>
         <div className='flex items-center justify-center space-x-3'>
-            <Link href={'/'} className="hover:text-rose-600">HOME</Link>
+            <Link href={'/'} className="hover:text-rose-600 hover:border-b hover:border-rose-500 hover:border-solid">HOME</Link>
             {session? (
             <>
-                <Link href={'/new-releases'} className="hover:text-rose-600">NEW RELEASES</Link>
+                <Link href={'/new-releases'} className="hover:text-rose-600 hover:border-b hover:border-rose-500 hover:border-solid">NEW RELEASES</Link>
                 <Menu as="div" className={' relative font-light  text-left flex flex-row'}>
                 {({ open }) => (
                     <>
@@ -27,7 +27,7 @@ function Header() {
                             alt={`${session?.user?.name}`}
                             width={30}
                             height={30}
-                            className="rounded-full hover:cursor-pointer hover:border hover:border-1 hover:border-rose-600 hover:text-rose-600 hover:scale-105"
+                            className="rounded-full hover:cursor-pointer hover:border hover:border-1 hover:border-rose-600 hover:text-rose-600 hover:border-b hover:border-rose-500 hover:border-solid hover:scale-105"
                         />
                     </Menu.Button>
                     <Menu.Items className={'absolute right-0 mt-10 w-56 origin-top-right border shadow-md text-black rounded-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'}>
@@ -53,7 +53,7 @@ function Header() {
                 </Menu>
                 
             </>
-            ):<Link href={'/login'} className="hover:text-rose-600">LOGIN</Link>}
+            ):<Link href={'/login'} className="hover:text-rose-600 hover:border-b hover:border-rose-500 hover:border-solid">LOGIN</Link>}
         </div>
     </div>
   )

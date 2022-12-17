@@ -47,7 +47,7 @@ const Home: NextPage = () => {
   }
   
   return (
-    <div>
+    <>
       <HeadCustom title="Login"/>
       <main className="relative">
         <div className="absolute right-0 p-5 flex items-center justify-center">
@@ -126,7 +126,7 @@ const Home: NextPage = () => {
           </div>
         </form>
       </main>
-    </div>
+    </>
   );
 };
 

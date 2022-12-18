@@ -5,7 +5,7 @@ import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import { toast } from 'react-toastify';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import Layout from '../../../components/Administrator/Layout';
+import Layout from '../../../components/administrator/Layout';
 
 interface Data{
   id:string

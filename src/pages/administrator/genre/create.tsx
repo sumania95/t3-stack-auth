@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Layout from '../../../components/Administrator/Layout'
+import Layout from '../../../components/administrator/Layout'
 import HeadCustom from '../../../components/HeadCustom'
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";

@@ -7,12 +7,7 @@ import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 import { verify } from "argon2";
 export const authOptions: NextAuthOptions = {
-  // // Include user.id on session
-  // callbacks: {
-  //   async redirect({ url, baseUrl }) {
-  //     return baseUrl
-  //   }
-  // },
+
   session:{
     strategy:'jwt',
   },

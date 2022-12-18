@@ -36,7 +36,7 @@ const GenreComponent:NextPage = () => {
   return (
     <main className='flex flex-col w-full space-y-3'>
         <div className='flex flex-row items-center justify-between space-x-3'>
-            <Link href="/user/administrator/genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
+            <Link href="/administrator/genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
             <input 
                 type="search" 
                 name="search"
@@ -73,7 +73,7 @@ const GenreComponent:NextPage = () => {
                                     {genre.genre}
                                 </td>
                                 <td className="py-4 px-6">
-                                <Link href={`/user/administrator/genre/${genre.id}`} className="font-medium text-blue-600">Edit</Link>
+                                <Link href={`/administrator/genre/${genre.id}`} className="font-medium text-blue-600">Edit</Link>
                                 <button onClick={()=>handleDelete(genre.id)} className="font-medium text-blue-600">Remove</button>
                                 </td>
                             </tr>

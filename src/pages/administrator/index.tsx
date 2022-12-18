@@ -2,6 +2,11 @@ import React from 'react'
 import Layout from '../../components/administrator/Layout'
 import HeadCustom from '../../components/HeadCustom'
 
+import { requireAuth } from "../../server/common/requireAuth";
+
+export const getServerSideProps = requireAuth(async (ctx) => {
+  return { props: {} };
+});
 function Administrator() {
   return (
     <Layout>

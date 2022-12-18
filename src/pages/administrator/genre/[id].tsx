@@ -4,16 +4,11 @@ import HeadCustom from '../../../components/HeadCustom'
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import { toast } from 'react-toastify';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import Layout from '../../../components/administrator/Layout';
 
-interface Data{
-  id:string
-  genre:string
-}
-
-function Update({id}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const {data, isLoading} = trpc.genre.gedId.useQuery({id})
+const UpdateGenre:NextPage = () => {
+  const {data, isLoading} = trpc.genre.gedId.useQuery()
   const [genre, setGenre] = useState("")
   if(isLoading){
     return (
@@ -63,13 +58,4 @@ function Update({id}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   )
 }
 
-export default Update
-
-export const getServerSideProps = async (params:any) => {
-  const id = params?.query?.id;
-  return {
-    props: {
-      id,
-    },
-  }
-}
+export default UpdateGenre

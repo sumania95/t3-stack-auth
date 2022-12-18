@@ -61,7 +61,7 @@ const SignUp: NextPage = () => {
 
   return (
     <div>
-      <HeadCustom title="Login"/>
+      <HeadCustom title="Register"/>
       <main className="relative">
         <div className="absolute right-0 p-5 flex items-center justify-center">
           <Link href={'/'}  className="p-3 border bg-gray-50 text-2xl hover:text-gray-700 text-gray-500"><AiOutlineClose></AiOutlineClose></Link>
@@ -75,7 +75,13 @@ const SignUp: NextPage = () => {
           <div className="p-2">
             <div className="h-1 bg-rose-500"></div>
             <div className="w-full flex flex-col items-center justify-center space-y-3 border p-10">
-            <h2 className="p-4 m-2 text-3xl mb-5">Create New Account</h2>
+            <Link href={'/'} className="w-full border-b pb-2">
+                <div className='flex flex-col items-center justify-center'>
+                    <h3 className='text-3xl font-bold bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>VJ DISTRICT HUB</h3>
+                    <p className='tracking-[.58em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
+                </div>
+            </Link>
+            <h2 className="p-4 m-2 text-2xl mb-5">Create New Account</h2>
               <div className="relative w-full pb-6">
                 <input
                   id="email"

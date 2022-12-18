@@ -5,10 +5,15 @@ import { Menu } from '@headlessui/react'
 
 
 function Header() {
-    const {data:session} = useSession()
+  const {data:session} = useSession()
   return (
-    <div className='sticky top-0 shadow-md bg-white h-16 flex items-center justify-between px-5'>
-        <Link href={'/'}>LOGO</Link>
+    <div className='sticky top-0 shadow-md h-16 flex items-center justify-between px-5'>
+        <Link href={'/'}>
+            <div className='flex flex-col items-start justify-center'>
+                <h3 className='text-2xl font-bold bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>VJ DISTRICT HUB</h3>
+                <p className='tracking-[.35em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
+            </div>
+        </Link>
         <div className='flex items-center justify-center space-x-3'>
             <Link href={'/'} className="hover:text-rose-600">HOME</Link>
             {session? (
@@ -23,7 +28,7 @@ function Header() {
                             alt={`${session?.user?.name}`}
                             width={30}
                             height={30}
-                            className="rounded-full hover:cursor-pointer hover:border hover:border-1 hover:text-rose-600 hover:scale-105"
+                            className="rounded-full hover:cursor-pointer hover:border hover:text-rose-600 hover:scale-110"
                         />
                     </Menu.Button>
                     <Menu.Items className={'absolute right-0 mt-10 w-56 origin-top-right border shadow-md text-black rounded-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'}>

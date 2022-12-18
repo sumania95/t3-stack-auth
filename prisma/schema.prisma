@@ -20,6 +20,16 @@ model Genre {
   genre     String? @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  sub_gere  SubGenre[]
+}
+
+model SubGenre{
+  id          String   @id @default(cuid())
+  genreId     String
+  sub_genre   String? @db.Text
+  genre       Genre     @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum Role {

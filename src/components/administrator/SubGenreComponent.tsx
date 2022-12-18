@@ -7,25 +7,33 @@ import { NextPage } from 'next';
 
 const GenreComponent:NextPage = () => {
   const [search, setSearch] = useState("");
-  const {data} = trpc.genre.getAll.useQuery({genre:search});
-  const {mutateAsync} = trpc.genre.delete.useMutation()
+  const {data} = trpc.subgenre.getAll.useQuery({sub_genre:search});
+  const {mutateAsync} = trpc.subgenre.delete.useMutation()
   
-
+  console.log(data)
   const handleDelete = (id:any) =>{
     mutateAsync({
         id: id
     }).then(res => {
         console.log(res.result);
-        toast.warning(`${res.result} genre Successfully deleted`);
+        toast.warning(`${res.result} successfully deleted`);
     }).catch(e => {
-        console.log(e);
         toast.error(e.message);
     })
   }
+  
+
+//   if (isLoading) {
+//     return(
+//         <div className='flex items-center justify-center h-screen w-full -pb-20'>
+//            <Image alt="loading" src="/loading.svg" width={100} height={100}/>
+//         </div>
+//     )
+//   }
   return (
     <main className='flex flex-col w-full space-y-3'>
         <div className='flex flex-row items-center justify-between space-x-3'>
-            <Link href="/user/administrator/genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
+            <Link href="/user/administrator/sub-genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
             <input 
                 type="search" 
                 name="search"
@@ -43,7 +51,10 @@ const GenreComponent:NextPage = () => {
                         <th className=" w-1/12 py-3 px-6">
                             #
                         </th>
-                        <th className=" w-10/12 py-3 px-6">
+                        <th className=" w-5/12 py-3 px-6">
+                            Sub Genre
+                        </th>
+                        <th className=" w-5/12 py-3 px-6">
                             Genre
                         </th>
                         <th className="py-3 px-6">
@@ -54,17 +65,20 @@ const GenreComponent:NextPage = () => {
                 <tbody>
                     {data?.result?.length?
                     <>
-                        {data?.result?.map((genre, i) => (
-                            <tr className="bg-white border-b" key={genre.id}>
+                        {data?.result?.map((item, i) => (
+                            <tr className="bg-white border-b" key={item.id}>
                                 <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {i+1}
                                 </th>
-                                <td className=" w-10/12 py-4 px-6">
-                                    {genre.genre}
+                                <td className=" w-5/12 py-4 px-6">
+                                    {item.sub_genre}
+                                </td>
+                                <td className=" w-5/12 py-4 px-6">
+                                    {item.genre.genre}
                                 </td>
                                 <td className="py-4 px-6">
-                                <Link href={`/user/administrator/genre/${genre.id}`} className="font-medium text-blue-600">Edit</Link>
-                                <button onClick={()=>handleDelete(genre.id)} className="font-medium text-blue-600">Remove</button>
+                                <Link href={`/user/administrator/genre/${item.id}`} className="font-medium text-blue-600">Edit</Link>
+                                <button onClick={()=>handleDelete(item.id)} className="font-medium text-blue-600">Remove</button>
                                 </td>
                             </tr>
                         ))}
@@ -72,7 +86,7 @@ const GenreComponent:NextPage = () => {
                     :
                     <>
                         <tr className="bg-white border-b">
-                            <td className=" w-full py-4 px-6 text-center">
+                            <td className="w-full py-4 px-6 text-center">
                                 No record found.
                             </td>
                         </tr>

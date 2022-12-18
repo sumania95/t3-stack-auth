@@ -31,7 +31,7 @@ function Update({id}: InferGetServerSidePropsType<typeof getServerSideProps>) {
        <main className='flex flex-col w-full space-y-3'>
         <h3>ADD NEW GENRE</h3>
         <div className='pb-10'></div>
-        <form onSubmit={(e)=>{}} className='flex flex-col w-full'>
+        <form className='flex flex-col w-full'>
           <div className="relative w-full pb-6">
             <input
               id="genre"

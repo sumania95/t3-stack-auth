@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { trpc } from "../../utils/trpc";
 import Link from 'next/link';
+import { toast } from 'react-toastify';
+import Image from "next/image";
 
 function GenreComponent() {
   const [search, setSearch] = useState("");
-  const genres = trpc.genre.getAll.useQuery({genre:search});
-  console.log(genres.data);
-  if (genres.data){
-    console.log('has data')
-  }
+  const {data, isLoading} = trpc.genre.getAll.useQuery({genre:search});
+  const {mutateAsync} = trpc.genre.delete.useMutation()
+  console.log(data);
 
+  const handleDelete = (id:any) =>{
+    mutateAsync({
+        id: id
+    }).then(res => {
+        console.log(res);
+        toast.warning("Genre successfully deleted");
+    }).catch(e => {
+        console.log(e);
+        toast.error(e.message);
+    })
+  }
+  if (isLoading) {
+    return(
+        <div className='flex items-center justify-center h-screen w-full -pb-20'>
+           <Image alt="loading" src="/loading.svg" width={150} height={150}/>
+        </div>
+    )
+  }
   return (
     <main className='flex flex-col w-full space-y-3'>
         <div className='flex flex-row items-center justify-between space-x-3'>
@@ -40,9 +58,9 @@ function GenreComponent() {
                     </tr>
                 </thead>
                 <tbody>
-                    {genres.data?.result?.length?
+                    {data?.result?.length?
                     <>
-                        {genres.data?.result?.map((genre, i) => (
+                        {data?.result?.map((genre, i) => (
                             <tr className="bg-white border-b" key={genre.id}>
                                 <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {i+1}
@@ -51,7 +69,8 @@ function GenreComponent() {
                                     {genre.genre}
                                 </td>
                                 <td className="py-4 px-6">
-                                    <a href="#" className="font-medium text-blue-600">Edit</a>
+                                <Link href={`/user/administrator/genre/${genre.id}`} className="font-medium text-blue-600">Edit</Link>
+                                <button onClick={()=>handleDelete(genre.id)} className="font-medium text-blue-600">Remove</button>
                                 </td>
                             </tr>
                         ))}

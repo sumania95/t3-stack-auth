@@ -54,6 +54,19 @@ export const genreRouter = router({
         result: result.genre,
       };
     }),
+  gedId: publicProcedure
+  .input(z.object({ 
+      id: z.string().nullish(),
+  }).nullish())
+  .query(async ({ input,ctx }) => {
+      const { id } = input as { id: string };
+      const result = await ctx.prisma.genre.findFirst({
+        where: { id:id },
+      })
+      return {
+        data:result?.genre,
+      };
+  }),
   getAll: publicProcedure
     .input(z.object({ 
         genre: z.string(),

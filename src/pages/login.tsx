@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { AiOutlineClose } from "react-icons/ai";
 import HeadCustom from "../components/HeadCustom";
 import Image from "next/image";
+
 interface FormData {
     email: string;
     password: string;

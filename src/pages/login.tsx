@@ -65,7 +65,7 @@ const Home: NextPage = () => {
               <Link href={'/'} className="w-full border-b pb-5">
                   <div className='flex flex-col items-center justify-center'>
                       <h3 className='text-3xl font-bold bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>VJ DISTRICT HUB</h3>
-                      <p className='tracking-[.58em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
+                      <p className='ml-2 tracking-[.58em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
                   </div>
               </Link>
               <h2 className="p-4 m-2 text-2xl mb-5">Welcome back!</h2>

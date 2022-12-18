@@ -51,7 +51,7 @@ const Home: NextPage = () => {
     <>
       <HeadCustom title="Login"/>
       <main className="relative">
-        <div className="absolute right-0 p-5 flex items-center justify-center">
+        <div className="hidden md:flex absolute right-0 p-5 items-center justify-center">
           <Link href={'/'}  className="p-3 border bg-gray-50 text-2xl hover:text-gray-700 text-gray-500"><AiOutlineClose></AiOutlineClose></Link>
         </div>
         <form

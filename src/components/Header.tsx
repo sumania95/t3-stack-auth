@@ -40,7 +40,7 @@ function Header() {
                             <Link href="/user/remixer">Remixer Editor</Link>
                         </div>
                         <div className='hover:text-gray-600'>
-                            <Link href="/user/administrator">Administrator</Link>
+                            <Link href="/administrator">Administrator</Link>
                         </div>
                         <div className='hover:text-gray-600'>
                             <Link href="/" onClick={()=>{

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { trpc } from "../../utils/trpc";
+import { trpc } from "../../../utils/trpc";
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Image from "next/image";

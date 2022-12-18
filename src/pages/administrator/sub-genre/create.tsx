@@ -1,51 +1,58 @@
 import React, { useState } from 'react'
-import Layout from '../../../../components/administrator/Layout'
-import HeadCustom from '../../../../components/HeadCustom'
+import Layout from '../../../components/Administrator/Layout'
+import HeadCustom from '../../../components/HeadCustom'
 import Image from "next/image";
-import { trpc } from "../../../../utils/trpc";
+import { trpc } from "../../../utils/trpc";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
-import { requireAuth } from "../../../../server/common/requireAuth";
+import { requireAuth } from "../../../server/common/requireAuth";
 
 export const getServerSideProps = requireAuth(async (ctx) => {
     return { props: {} };
 });
+
 interface Genre {
-  genre: string;
+  genreId: string;
+  sub_genre: string;
 }
 
 function Create() {
-  const [data, setData] = useState<Genre>({
-    genre: "",
+  const utils = trpc.useContext();
+  const router = useRouter();
+  const [form, setForm] = useState<Genre>({
+    sub_genre: "",
+    genreId: "",
   })
   const [isloading, setIsloading] = useState(false)
-  const { mutateAsync } = trpc.genre.create.useMutation();
-  const router = useRouter();
-  
+  const createSubGenre = trpc.subgenre.create.useMutation({
+    onSuccess:()=>{
+      utils.subgenre.getAll.invalidate()
+      setForm({
+        sub_genre: "",
+        genreId: "",
+      })
+      utils.genre.getAll.invalidate()
+
+      setTimeout(()=>{ 
+        toast.success("Sub Genre successfully created")
+        setIsloading(false);
+      }, 400);
+      router.push("/user/administrator/sub-genre")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+      setIsloading(false);
+    },
+  });
+  const { data } = trpc.genre.getAll.useQuery({genre:""});
 
   const handleSubmit = (e:any) => {
     e.preventDefault()
     if (isloading) return;
     setIsloading(true)
-    mutateAsync({
-      genre: data.genre,
-      
-    })
-    .then((res:any) => {
-      setTimeout(()=>{ 
-        toast.success(res.message);
-        setIsloading(false);
-      }, 400);
-      
-      setData({
-        genre: "",
-      })
-    })
-    .catch((error:any) =>{
-      setTimeout(()=>{ 
-        toast.error(error.message)
-        setIsloading(false);
-      }, 400);
+    createSubGenre.mutate({
+      genreId: form.genreId,
+      sub_genre: form.sub_genre,
     })
   }
 
@@ -58,23 +65,31 @@ function Create() {
         <form onSubmit={(e)=>{handleSubmit(e)}} className='flex flex-col w-full'>
           <div className="relative w-full pb-6">
             <input
-              id="genre"
-              name="genre"
+              id="sub_genre"
+              name="sub_genre"
               type="text"
               placeholder=" "
               className="peer w-full text-xl placeholder-transparent outline-none border-b border-gray-300 focus:border-gray-600"
-              value={data.genre}
-              onChange={(e) => setData({...data, genre: e.target.value})}
+              value={form.sub_genre}
+              onChange={(e) => setForm({...form, sub_genre: e.target.value})}
               />
-            <label htmlFor="genre" 
+            <label htmlFor="sub_genre" 
               className="absolute left-0 -top-6 text-sm text-gray-900
               peer-placeholder-shown:text-base
               peer-placeholder-shown:-top-1
               transition-all
               peer-focus:-top-6
               peer-focus:text-sm
-              ">Genre
+              ">Sub Genre
             </label>
+          </div>
+          <div className="relative w-full pb-6">
+            <select onChange={(e)=>setForm({...form,genreId:e.target.value})} name="genre" id="genre" className='p-2 border'>
+              <option value="1">Select Genre</option>
+              {data?.map((item, index) => (
+                <option key={item.id} value={item.id}>{item.genre}</option>
+              ))}
+            </select>
           </div>
           <div className="flex items-start justify-start">
             {isloading?

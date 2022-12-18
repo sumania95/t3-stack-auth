@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Layout from '../../../components/administrator/Layout'
-import HeadCustom from '../../../components/HeadCustom'
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
 import { requireAuth } from "../../../server/common/requireAuth";
+import Layout from '../../../components/administrator/Layout';
+import HeadCustom from '../../../components/HeadCustom';
 
 export const getServerSideProps = requireAuth(async (ctx) => {
     return { props: {} };

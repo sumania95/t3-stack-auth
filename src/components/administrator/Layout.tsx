@@ -1,7 +1,6 @@
 import React from 'react'
-import SidebarComponent from './SidebarComponent'
-import HeadCustom from '../HeadCustom';
 import Header from '../Header';
+import SidebarComponent from './SidebarComponent';
 type AdministratorLayoutProps = {
     children: React.ReactNode,
 };

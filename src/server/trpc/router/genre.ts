@@ -4,25 +4,21 @@ import { router, publicProcedure } from "../trpc";
 export const genreRouter = router({
   create: publicProcedure
     .input(z.object({ 
-        genre: z.string().nullish(),
-    }).nullish())
+        genre: z.string(),
+    }))
     .mutation(async ({ input,ctx }) => {
+       const { genre} = input as { genre: string };
        const isExist = await ctx.prisma.genre.findFirst({
         where: {
-          genre: input?.genre,
+          genre,
         }
        })
        if (isExist) {
           throw new Error("Genre already exists")
        }
-       const result = await ctx.prisma.genre.create({
-        data: {genre:input?.genre,}
-        })
-      return {
-        status: 201,
-        message: "New genre created successfully",
-        result: result.genre,
-      };
+      return await ctx.prisma.genre.create({
+        data: {genre}
+      })
     }),
   update: publicProcedure
     .input(z.object({ 
@@ -30,53 +26,44 @@ export const genreRouter = router({
         genre: z.string().nullish(),
     }).nullish())
     .mutation(async ({ input,ctx }) => {
-       const result = await ctx.prisma.genre.update({
-        data: {genre:input?.genre},
-        where: {id: input?.id}
-        })
-      return {
-        status: 201,
-        message: "Genre updated successfully",
-        result: result.genre,
-      };
+      const { id, genre} = input as { id: string,genre: string };
+      return await ctx.prisma.genre.update({
+        data: {genre},
+        where: {id}
+      })
     }),
   delete: publicProcedure
     .input(z.object({ 
         id: z.string(),
     }).nullish())
     .mutation(async ({ input,ctx }) => {
-       const result = await ctx.prisma.genre.delete({
-        where: {id: input?.id}
-        })
-      return {
-        status: 201,
-        message: "Genre deleted successfully",
-        result: result.genre,
-      };
+      const { id } = input as { id: string };
+      return await ctx.prisma.genre.delete({
+        where: {id}
+      })
     }),
   gedId: publicProcedure
-  .input(z.object({ 
-      id: z.string().nullish(),
-  }).nullish())
-  .query(async ({ input,ctx }) => {
-      const { id } = input as { id: string };
-      const result = await ctx.prisma.genre.findFirst({
-        where: { id:id },
-      })
-      return {
-        data:result?.genre,
-      };
-  }),
+    .input(z.object({ 
+        id: z.string().nullish(),
+    }).nullish())
+    .query(async ({ input,ctx }) => {
+        const { id } = input as { id: string };
+        return await ctx.prisma.genre.findFirst({
+          where: { id },
+        })
+    }),
   getAll: publicProcedure
     .input(z.object({ 
         genre: z.string(),
     }).nullish())
     .query(async({ input,ctx }) => {
+      const { genre } = input as { genre: string };
+
       if (input?.genre) {
-        const result = await ctx.prisma.genre.findMany({
+        return await ctx.prisma.genre.findMany({
           where: {
               genre: {
-                startsWith: input?.genre,
+                startsWith: genre,
               },
           }, 
           select:{
@@ -84,19 +71,13 @@ export const genreRouter = router({
             genre: true,
           }
         })
-        return {
-          result
-        };
       }else{
-        const result = await ctx.prisma.genre.findMany({
+        return await ctx.prisma.genre.findMany({
           select:{
             id: true,
             genre: true,
           }
         })
-        return {
-          result
-        };
       }
     }),
 

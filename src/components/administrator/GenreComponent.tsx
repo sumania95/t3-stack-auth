@@ -4,22 +4,33 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Image from "next/image";
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { Genre } from '@prisma/client';
 
 const GenreComponent:NextPage = () => {
+  const utils = trpc.useContext();
   const [search, setSearch] = useState("");
-  const {data} = trpc.genre.getAll.useQuery({genre:search});
-  const {mutateAsync} = trpc.genre.delete.useMutation()
-  
+  const [items, setItems] = useState<Genre[]>([]);
 
+//   const {data} = trpc.genre.getAll.useQuery({genre:search});
+  const {data} = trpc.genre.getAll.useQuery({genre:search});
+//   useEffect(() => {
+//     return () => {
+//       second
+//     }
+//   }, [third])
+  
+  const router = useRouter();
+  
+  const updateSubGenre = trpc.genre.delete.useMutation({
+    onSettled:()=>{
+     utils.genre.getAll.invalidate();
+     toast.warning(`Genre successfully deleted`);
+    }
+  });
   const handleDelete = (id:any) =>{
-    mutateAsync({
-        id: id
-    }).then(res => {
-        console.log(res.result);
-        toast.warning(`${res.result} genre Successfully deleted`);
-    }).catch(e => {
-        console.log(e);
-        toast.error(e.message);
+    updateSubGenre.mutate({
+        id
     })
   }
   return (
@@ -52,9 +63,8 @@ const GenreComponent:NextPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.result?.length?
                     <>
-                        {data?.result?.map((genre, i) => (
+                        {data?.map((genre, i) => (
                             <tr className="bg-white border-b" key={genre.id}>
                                 <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {i+1}
@@ -69,15 +79,6 @@ const GenreComponent:NextPage = () => {
                             </tr>
                         ))}
                     </>
-                    :
-                    <>
-                        <tr className="bg-white border-b">
-                            <td className=" w-full py-4 px-6 text-center">
-                                No record found.
-                            </td>
-                        </tr>
-                    </>
-                    }
                 </tbody>
             </table>
         </div>

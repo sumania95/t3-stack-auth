@@ -8,26 +8,26 @@ export const subGenreRouter = router({
         sub_genre: z.string(),
     }))
     .mutation(async ({ input,ctx }) => {
-       const isExist = await ctx.prisma.subGenre.findFirst({
-        where: {
-          sub_genre: input?.sub_genre,
-          genreId: input?.genreId,
-        }
-       })
-       if (isExist) {
-          throw new Error("Genre already exists")
-       }
-       const result = await ctx.prisma.subGenre.create({
+       const { sub_genre,genreId } = input as { sub_genre: string, genreId: string};
+       try {
+         const isExist = await ctx.prisma.subGenre.findFirst({
+          where: {
+            sub_genre,
+            genreId,
+          }
+         })
+         if (isExist) {
+            throw new Error("Sub Genre already exists")
+         }
+        return await ctx.prisma.subGenre.create({
           data:{
-            genreId: input?.genreId,
-            sub_genre: input?.sub_genre,
+            genreId,
+            sub_genre,
           }
         })
-      return {
-        status: 201,
-        message: "New sub genre created successfully",
-        result: result.sub_genre,
-      };
+       }catch(e) {
+         throw new Error("Invalid genre please try again")
+       }
     }),
   update: publicProcedure
     .input(z.object({ 
@@ -36,33 +36,24 @@ export const subGenreRouter = router({
         sub_genre: z.string().nullish(),
     }).nullish())
     .mutation(async ({ input,ctx }) => {
-       const result = await ctx.prisma.subGenre.update({
+      const { sub_genre,genreId } = input as { sub_genre: string, genreId: string};
+      return await ctx.prisma.subGenre.update({
         data: {
-          sub_genre:input?.sub_genre,
-          genreId:input?.genreId,
+          sub_genre,
+          genreId,
         },
         where: {id: input?.id}
         })
-      return {
-        status: 201,
-        message: "Genre updated successfully",
-        result: result.sub_genre,
-      };
     }),
   delete: publicProcedure
     .input(z.object({ 
         id: z.string(),
     }).nullish())
     .mutation(async ({ input,ctx }) => {
-       const result = await ctx.prisma.subGenre.delete({
-        where: {id: input?.id}
+      const { id } = input as { id: string };
+      return await ctx.prisma.subGenre.delete({
+        where: { id }
         })
-      return {
-        status: 201,
-        message: "Genre deleted successfully",
-        result: result.sub_genre,
-
-      };
     }),
   gedId: publicProcedure
   .input(z.object({ 
@@ -70,41 +61,33 @@ export const subGenreRouter = router({
   }).nullish())
   .query(async ({ input,ctx }) => {
       const { id } = input as { id: string };
-      const result = await ctx.prisma.subGenre.findFirst({
-        where: { id:id },
+      return await ctx.prisma.subGenre.findUnique({
+        where: { id },
       })
-      return {
-        data:result?.sub_genre,
-      };
   }),
   getAll: publicProcedure
     .input(z.object({ 
       sub_genre: z.string(),
     }).nullish())
     .query(async({ input,ctx }) => {
-      if (input?.sub_genre){
-        const result = await ctx.prisma.subGenre.findMany({
+      const { sub_genre } = input as { sub_genre: string };
+      if (sub_genre){
+        return await ctx.prisma.subGenre.findMany({
           where: {
               sub_genre: {
-                startsWith: input?.sub_genre,
+                startsWith: sub_genre,
               },
           }, 
           include:{
             genre: true,
           }
         })
-        return {
-          result
-        };
       }else{
-        const result = await ctx.prisma.subGenre.findMany({
+        return await ctx.prisma.subGenre.findMany({
           include:{
             genre: true,
           }
         })
-        return {
-          result
-        };
       }
     }),
 

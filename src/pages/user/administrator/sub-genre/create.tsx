@@ -12,41 +12,42 @@ interface Genre {
 }
 
 function Create() {
+  const utils = trpc.useContext();
+  const router = useRouter();
   const [form, setForm] = useState<Genre>({
     sub_genre: "",
     genreId: "",
   })
   const [isloading, setIsloading] = useState(false)
-  const { mutateAsync } = trpc.subgenre.create.useMutation();
-  const {data, isLoading} = trpc.genre.getAll.useQuery({genre:""});
-  const router = useRouter();
-  
+  const createSubGenre = trpc.subgenre.create.useMutation({
+    onSuccess:()=>{
+      utils.subgenre.getAll.invalidate()
+      setForm({
+        sub_genre: "",
+        genreId: "",
+      })
+      utils.genre.getAll.invalidate()
+
+      setTimeout(()=>{ 
+        toast.success("Sub Genre successfully created")
+        setIsloading(false);
+      }, 400);
+      router.push("/user/administrator/sub-genre")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+      setIsloading(false);
+    },
+  });
+  const { data } = trpc.genre.getAll.useQuery({genre:""});
 
   const handleSubmit = (e:any) => {
     e.preventDefault()
     if (isloading) return;
     setIsloading(true)
-    mutateAsync({
+    createSubGenre.mutate({
       genreId: form.genreId,
       sub_genre: form.sub_genre,
-      
-    })
-    .then((res:any) => {
-      setTimeout(()=>{ 
-        toast.success(res.message);
-        setIsloading(false);
-      }, 400);
-      
-      setForm({
-        sub_genre: "",
-        genreId: form.genreId,
-      })
-    })
-    .catch((error:any) =>{
-      setTimeout(()=>{ 
-        toast.error(error.message)
-        setIsloading(false);
-      }, 400);
     })
   }
 
@@ -79,8 +80,8 @@ function Create() {
           </div>
           <div className="relative w-full pb-6">
             <select onChange={(e)=>setForm({...form,genreId:e.target.value})} name="genre" id="genre" className='p-2 border'>
-              <option>Select Genre</option>
-              {data?.result.map((item, index) => (
+              <option value="1">Select Genre</option>
+              {data?.map((item, index) => (
                 <option key={item.id} value={item.id}>{item.genre}</option>
               ))}
             </select>

@@ -4,32 +4,29 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Image from "next/image";
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+
 
 const GenreComponent:NextPage = () => {
+  const utils = trpc.useContext();
+  const router = useRouter();
   const [search, setSearch] = useState("");
-  const {data} = trpc.subgenre.getAll.useQuery({sub_genre:search});
   const {mutateAsync} = trpc.subgenre.delete.useMutation()
-  
-  console.log(data)
-  const handleDelete = (id:any) =>{
-    mutateAsync({
-        id: id
-    }).then(res => {
-        console.log(res.result);
-        toast.warning(`${res.result} successfully deleted`);
-    }).catch(e => {
-        toast.error(e.message);
-    })
-  }
-  
+  const {data} = trpc.subgenre.getAll.useQuery({sub_genre:search});
 
-//   if (isLoading) {
-//     return(
-//         <div className='flex items-center justify-center h-screen w-full -pb-20'>
-//            <Image alt="loading" src="/loading.svg" width={100} height={100}/>
-//         </div>
-//     )
-//   }
+  const updateSubGenre = trpc.subgenre.delete.useMutation({
+    onSettled:()=>{
+     utils.subgenre.getAll.invalidate();
+     toast.warning(`Sub Genre successfully deleted`);
+    }
+  });
+  const handleDelete = (id:any) =>{
+    updateSubGenre.mutate({
+        id: id
+    });
+    utils.subgenre.getAll.invalidate();
+  }
+
   return (
     <main className='flex flex-col w-full space-y-3'>
         <div className='flex flex-row items-center justify-between space-x-3'>
@@ -63,9 +60,8 @@ const GenreComponent:NextPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.result?.length?
-                    <>
-                        {data?.result?.map((item, i) => (
+                     <>
+                        {data?.map((item, i) => (
                             <tr className="bg-white border-b" key={item.id}>
                                 <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {i+1}
@@ -83,15 +79,6 @@ const GenreComponent:NextPage = () => {
                             </tr>
                         ))}
                     </>
-                    :
-                    <>
-                        <tr className="bg-white border-b">
-                            <td className="w-full py-4 px-6 text-center">
-                                No record found.
-                            </td>
-                        </tr>
-                    </>
-                    }
                 </tbody>
             </table>
         </div>

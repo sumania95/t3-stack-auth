@@ -7,12 +7,12 @@ import { trpc } from "../../../../utils/trpc";
 import { toast } from 'react-toastify';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
-type Data = {
+interface Data{
   id:string
+  genre:string
 }
 
 function Update({id}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(id)
   const {data, isLoading} = trpc.genre.gedId.useQuery({id})
   const [genre, setGenre] = useState("")
   if(isLoading){

@@ -1,6 +1,6 @@
 import React from 'react'
-import HeadCustom from '../../components/HeadCustom'
 import Layout from '../../components/administrator/Layout'
+import HeadCustom from '../../components/HeadCustom'
 
 function Administrator() {
   return (

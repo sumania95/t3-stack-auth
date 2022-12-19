@@ -32,7 +32,7 @@ export const subGenreRouter = router({
   update: publicProcedure
     .input(z.object({ 
         id: z.string(),
-        genreId: z.string(),
+        genreId: z.string().nullish(),
         sub_genre: z.string().nullish(),
     }).nullish())
     .mutation(async ({ input,ctx }) => {

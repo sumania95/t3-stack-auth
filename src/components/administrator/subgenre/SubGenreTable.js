@@ -31,7 +31,7 @@ const SubGenreTable = ({items}) => {
                         {item.genre.genre}
                     </td>
                     <td className="py-4 px-6">
-                    <Link href={`/administrator/genre/${item.id}`} className="font-medium text-blue-600">Edit</Link>
+                    <Link href={`/administrator/sub-genre/${item.id}`} className="font-medium text-blue-600">Edit</Link>
                     <button onClick={()=>handleDelete(item.id)} className="font-medium text-blue-600">Remove</button>
                     </td>
                 </tr>

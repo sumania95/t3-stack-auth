@@ -34,7 +34,7 @@ function Create() {
         toast.success("Sub Genre successfully created")
         setIsloading(false);
       }, 400);
-      router.push("/administrator/sub-genre")
+      // router.push("/administrator/sub-genre")
     },
     onSettled:()=>{
       utils.subgenre.getAll.invalidate()
@@ -85,8 +85,8 @@ function Create() {
             </label>
           </div>
           <div className="relative w-full pb-6">
-            <select onChange={(e)=>setForm({...form,genreId:e.target.value})} name="genre" id="genre" className='p-2 border'>
-              <option value="1">Select Genre</option>
+            <select value={form.genreId} onChange={(e)=>setForm({...form,genreId:e.target.value})} name="genre" id="genre" className='p-2 border'>
+              <option>Select Genre</option>
               {data?.map((item, index) => (
                 <option key={item.id} value={item.id}>{item.genre}</option>
               ))}

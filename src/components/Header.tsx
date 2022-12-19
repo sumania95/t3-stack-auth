@@ -10,8 +10,8 @@ function Header() {
     <div className='sticky top-0 shadow-md h-16 flex items-center justify-between px-5'>
         <Link href={'/'}>
             <div className='flex flex-col items-center justify-center'>
-                <h3 className='text-2xl font-black bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>AV REMIX HUB</h3>
-                <p className='tracking-[.22em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
+                <h3 className='text-2xl font-black bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>AV REMIX STASH</h3>
+                <p className='tracking-[.35em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
             </div>
         </Link>
         <div className='flex items-center justify-center space-x-3'>

@@ -2,12 +2,13 @@ import React from 'react'
 import Layout from '../../components/administrator/Layout'
 import HeadCustom from '../../components/HeadCustom'
 
-import { requireAuth } from "../../server/common/requireAuth";
+import { isAdmin } from "../../server/common/requireAuth";
+import { NextPage } from 'next';
 
-export const getServerSideProps = requireAuth(async () => {
+export const getServerSideProps = isAdmin(async () => {
   return { props: {} };
 });
-function Administrator() {
+const Administrator:NextPage = () => {
   return (
     <Layout>
        <HeadCustom title="Dashboard"/>

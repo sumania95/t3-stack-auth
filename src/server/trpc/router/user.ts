@@ -12,6 +12,27 @@ export const userRouter = router({
       }
     })
   }),
+
+  update: protectedProcedure
+  .input(z.object({
+    firstname: z.string(),
+    lastname: z.string(),
+  }))
+  .mutation(async({input,ctx}) =>{
+    const {firstname, lastname} = input as {
+      firstname: string,
+      lastname: string
+    };
+    return await ctx.prisma.user.update({
+      data:{
+        firstname,
+        lastname,
+      },
+      where:{
+        email : ctx.session.user.email
+      }
+    })
+  }),
   
   login: publicProcedure
   .input(z.object({

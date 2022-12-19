@@ -8,7 +8,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 
 const Header:NextPage = () => {
   const {data:session} = useSession()
-  const data = trpc.user.me.useQuery();
+  const {data} = trpc.user.me.useQuery();
   return (
     <div className='sticky top-0 z-999 bg-white shadow-md h-16 flex items-center justify-between px-5'>
         <Link href={'/'}>
@@ -35,20 +35,26 @@ const Header:NextPage = () => {
                             height={25}
                             className="rounded-full hover:cursor-pointer hover:border hover:text-rose-600 hover:scale-110"
                         /> */}
-                        <span className={' normal-case font-normal'}>{data.data?.firstname?data.data?.firstname:"User"}</span>
+                        <span className={' normal-case font-normal'}>{data?.firstname?data?.firstname:"User"}</span>
                         
                     </Menu.Button>
                     <Menu.Items className={'absolute right-0 mt-10 w-56 origin-top-right border shadow-md text-black rounded-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'}>
                         <div className='p-5 space-y-3'>
                         <div className='hover:text-gray-600'>
-                            <Link href="/user">Your Account</Link>
+                            <Link href="/account">Your Account</Link>
                         </div>
+                        {data?.is_editor?
                         <div className='hover:text-gray-600'>
-                            <Link href="/user/remixer">Remixer Editor</Link>
+                            <Link href="/remixer">Remixer Editor</Link>
                         </div>
+                        :<></>
+                        }
+                        {data?.is_admin?
                         <div className='hover:text-gray-600'>
                             <Link href="/administrator">Administrator</Link>
                         </div>
+                        :<></>
+                        }
                         <div className='hover:text-gray-600'>
                             <Link href="/" onClick={()=>{
                                 signOut()

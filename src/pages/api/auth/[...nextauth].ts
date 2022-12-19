@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 import { verify } from "argon2";
+
 export const authOptions: NextAuthOptions = {
   session:{
     strategy:'jwt',

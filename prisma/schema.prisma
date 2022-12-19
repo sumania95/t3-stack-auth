@@ -26,24 +26,20 @@ model Genre {
 model SubGenre{
   id          String   @id @default(cuid())
   genreId     String
-  sub_genre   String? @db.Text
-  genre       Genre     @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  sub_genre   String?  @db.Text
+  genre       Genre    @relation(fields: [genreId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-enum Role {
-   User
-   Admin
- }
-
 model User {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   email       String   @unique
-  firstname   String? @db.Text
-  lastname    String? @db.Text
-  password    String @db.Text
-  role        Role? @default(User)
+  firstname   String?  @db.Text
+  lastname    String?  @db.Text
+  password    String   @db.Text
+  is_editor   Boolean? @default(false)
+  is_admin    Boolean? @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

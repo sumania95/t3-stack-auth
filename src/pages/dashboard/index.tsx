@@ -1,14 +1,19 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
-import { requireAuth } from "../../server/common/requireAuth";
+import { isAdmin } from "../../server/common/requireAuth";
+import { trpc } from "../../utils/trpc";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export const getServerSideProps = requireAuth(async () => {
+export const getServerSideProps = isAdmin(async () => {
     return { props: {} };
 });
 
-const Dashboard: NextPage = () => {
-    const { data } = useSession();
+function Dashboard () {
+  const router = useRouter();
+  const { data:session } = useSession();
+  const {data} = trpc.user.me.useQuery();
   return (
     <>
       <Head>
@@ -17,7 +22,7 @@ const Dashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <h1 className="text-white">Dashboard | {data?.user?.name}</h1>
+        <h1 className="text-white">Dashboard | {session?.user?.name}</h1>
       </main>
     </>
   );

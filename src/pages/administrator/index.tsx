@@ -2,9 +2,9 @@ import React from 'react'
 import Layout from '../../components/administrator/Layout'
 import HeadCustom from '../../components/HeadCustom'
 
-import { isAdmin } from "../../server/common/requireAuth";
 import { NextPage } from 'next';
 
+import { isAdmin } from "../../server/common/requireAuth";
 export const getServerSideProps = isAdmin(async () => {
   return { props: {} };
 });

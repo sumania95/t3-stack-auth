@@ -2,16 +2,9 @@ import React from 'react'
 import Layout from '../../../components/administrator/Layout';
 import HeadCustom from '../../../components/HeadCustom';
 import GenreComponent from '../../../components/administrator/genre/GenreComponents';
-import { requireAuth } from "../../../server/common/requireAuth";
-import { unstable_getServerSession } from 'next-auth';
-import Nextauth from '../../api/auth/[...nextauth]';
+import { isAdmin } from "../../../server/common/requireAuth";
 
-export const getServerSideProps = requireAuth(async (ctx) => {
-    const session = await unstable_getServerSession(
-      ctx.req,
-      ctx.res,
-      Nextauth
-    );
+export const getServerSideProps = isAdmin(async (ctx) => {
     return { props: {} };
 });
 function Genre () {

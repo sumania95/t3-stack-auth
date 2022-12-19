@@ -1,9 +1,22 @@
 import { z } from "zod";
 import { hash } from "argon2";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
 export const userRouter = router({
+  me: protectedProcedure
+  .query(async({input,ctx}) =>{
+    const user = await ctx.prisma.user.findUnique({
+      where:{
+        email : ctx.session.user.email
+      }
+    })
+
+    if (user?.role !== "Admin") return false;
+    return true;
+
+  }),
+  
   login: publicProcedure
   .input(z.object({
       email: z.string(),

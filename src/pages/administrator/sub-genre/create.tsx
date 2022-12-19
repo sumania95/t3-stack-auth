@@ -27,18 +27,19 @@ function Create() {
   const [isloading, setIsloading] = useState(false)
   const createSubGenre = trpc.subgenre.create.useMutation({
     onSuccess:()=>{
-      utils.subgenre.getAll.invalidate()
       setForm({
         sub_genre: "",
         genreId: "",
       })
-      utils.genre.getAll.invalidate()
-
       setTimeout(()=>{ 
         toast.success("Sub Genre successfully created")
         setIsloading(false);
       }, 400);
-      router.push("/user/administrator/sub-genre")
+      router.push("/administrator/sub-genre")
+    },
+    onSettled:()=>{
+      utils.subgenre.getAll.invalidate()
+      utils.genre.getAll.invalidate()
     },
     onError: (error) => {
       toast.error(error.message)

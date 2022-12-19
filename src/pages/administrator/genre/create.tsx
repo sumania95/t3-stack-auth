@@ -15,37 +15,44 @@ interface Genre {
 }
 
 function Create() {
+  const router = useRouter();
+
+  const utils = trpc.useContext();
   const [data, setData] = useState<Genre>({
     genre: "",
   })
   const [isloading, setIsloading] = useState(false)
-  const { mutateAsync } = trpc.genre.create.useMutation();
-  const router = useRouter();
-  
-
-  const handleSubmit = (e:any) => {
-    e.preventDefault()
-    if (isloading) return;
-    setIsloading(true)
-    mutateAsync({
-      genre: data.genre,
-      
-    })
-    .then((res:any) => {
-      setTimeout(()=>{ 
-        toast.success(res.message);
+  const createGenre = trpc.genre.create.useMutation({
+    onSuccess:(res)=>{
+        setTimeout(()=>{ 
+        toast.success("Genre successfully created")
         setIsloading(false);
       }, 400);
       
       setData({
         genre: "",
       })
-    })
-    .catch((error:any) =>{
+      router.push("/administrator/sub-genre")
+    },
+    onSettled:(res)=>{
+      utils.genre.getAll.invalidate()
+    },
+    onError: (error) => {
       setTimeout(()=>{ 
         toast.error(error.message)
         setIsloading(false);
       }, 400);
+    },
+  });
+  
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault()
+    if (isloading) return;
+    setIsloading(true)
+    createGenre.mutate({
+      genre: data.genre,
+      
     })
   }
 

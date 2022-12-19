@@ -64,11 +64,11 @@ const Home: NextPage = () => {
             <div className="w-full flex flex-col items-center justify-center space-y-3 border p-10">
               <Link href={'/'} className="w-full border-b pb-5">
                   <div className='flex flex-col items-center justify-center'>
-                      <h3 className='text-3xl font-bold bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>VJ DISTRICT HUB</h3>
-                      <p className='ml-2 tracking-[.58em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
+                      <h3 className='text-3xl font-bold bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>AV REMIX STASH</h3>
+                      <p className='ml-1 tracking-[.54em] text-xs font-semibold'>AUDIO VIDEO SOURCE</p>
                   </div>
               </Link>
-              <h2 className="p-4 m-2 text-2xl mb-5">Welcome back!</h2>
+              <h2 className="p-4 m-2 text-2xl pb-8">Welcome back!</h2>
               <div className="relative w-full pb-6">
                 <input
                   id="email"
@@ -77,6 +77,7 @@ const Home: NextPage = () => {
                   placeholder=" "
                   className="peer w-full text-xl placeholder-transparent outline-none border-b border-gray-300 focus:border-gray-600"
                   value={data.email}
+                  required
                   onChange={(e) => setData((data) => ({...data, email: e.target.value}))}
                   />
                 <label htmlFor="email" 
@@ -97,6 +98,7 @@ const Home: NextPage = () => {
                     type="password"
                     className="peer w-full text-2xl placeholder-transparent outline-none border-b border-gray-300 focus:border-gray-600"
                     value={data.password}
+                    required
                     onChange={(e) => setData((data) => ({...data, password: e.target.value}))}
                     />
                 <label htmlFor="password" 

@@ -2,7 +2,7 @@ import React from 'react'
 import Head from "next/head";
 
 function HeadCustom({title}) {
-  const headtitle = `${title} | VJ DISTRICT HUB` 
+  const headtitle = `${title} | AV Remix Stash` 
   return (
     <div>
         <Head>

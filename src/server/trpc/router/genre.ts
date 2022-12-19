@@ -50,13 +50,17 @@ export const genreRouter = router({
     }),
   gedId: publicProcedure
     .input(z.object({ 
-        id: z.string().nullish(),
+        id: z.string(),
     }).nullish())
     .query(async ({ input,ctx }) => {
         const { id } = input as { id: string };
-        return await ctx.prisma.genre.findFirst({
+        const genre = await ctx.prisma.genre.findFirst({
           where: { id },
         })
+        return {
+          id,
+          genre: genre?.genre,
+        }
     }),
   getAll: publicProcedure
     .input(z.object({ 

@@ -34,7 +34,7 @@ function Create() {
       })
       router.push("/administrator/genre")
     },
-    onSettled:(res)=>{
+    onSettled:()=>{
       utils.genre.getAll.invalidate()
     },
     onError: (error) => {

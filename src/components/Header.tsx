@@ -9,7 +9,7 @@ const Header:NextPage = () => {
   const {data:session} = useSession()
   const data = trpc.user.me.useQuery();
   return (
-    <div className='sticky top-0 shadow-md h-16 flex items-center justify-between px-5'>
+    <div className='sticky top-0 z-999 bg-white shadow-md h-16 flex items-center justify-between px-5'>
         <Link href={'/'}>
             <div className='flex flex-col items-center justify-center'>
                 <h3 className='text-2xl font-black bg-gradient-to-l text-transparent bg-clip-text  from-rose-600 to-rose-900'>AV REMIX STASH</h3>

@@ -6,7 +6,7 @@ import SubGenreTable from './SubGenreTable'
 
 const GenreComponent:NextPage = () => {
   const [search, setSearch] = useState("");
-  const {data} = trpc.subgenre.getAll.useQuery({sub_genre:search});
+  const {data,isLoading} = trpc.subgenre.getAll.useQuery({sub_genre:search});
   
   return (
     <main className='flex flex-col w-full space-y-3'>
@@ -41,7 +41,23 @@ const GenreComponent:NextPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                     <SubGenreTable items={data}/>
+                    {isLoading?
+                        <tr className='border w-full'>
+                            <td colSpan={12} className="text-center w-full p-4">
+                                Loading.....
+                            </td>
+                        </tr>
+                    :
+                    <>
+                        {data?.length?
+                            <SubGenreTable items={data}/>
+                        :
+                        <tr className='border'>
+                            <td colSpan={12} className="text-center w-full p-4">No record found</td>
+                        </tr>
+                        }
+                    </>
+                    }
                 </tbody>
             </table>
         </div>

@@ -3,10 +3,11 @@ import { trpc } from "../../../utils/trpc";
 import Link from 'next/link';
 import { NextPage } from 'next';
 import GenreTable from './GenreTable';
+import Image from "next/image";
 
 const GenreComponent:NextPage = () => {
   const [search, setSearch] = useState("");
-  const {data} = trpc.genre.getAll.useQuery({genre:search});
+  const {data,isLoading} = trpc.genre.getAll.useQuery({genre:search});
 
   return (
     <main className='flex flex-col w-full space-y-3'>
@@ -38,7 +39,24 @@ const GenreComponent:NextPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <GenreTable items={data}/>
+                    {isLoading?
+                        <tr className='border w-full'>
+                            <td colSpan={12} className="text-center w-full p-4">
+                                Loading.....
+                            </td>
+                        </tr>
+                    :
+                    <>
+                        {data?.length?
+                            <GenreTable items={data}/>
+                        :
+                        <tr className='border'>
+                            <td colSpan={12} className="text-center w-full p-4">No record found</td>
+                        </tr>
+                        }
+                    </>
+                    }
+                    
                 </tbody>
             </table>
         </div>

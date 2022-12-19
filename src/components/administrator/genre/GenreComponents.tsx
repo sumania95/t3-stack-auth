@@ -1,38 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { trpc } from "../../../utils/trpc";
 import Link from 'next/link';
-import { toast } from 'react-toastify';
-import Image from "next/image";
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { Genre } from '@prisma/client';
+import GenreTable from './GenreTable';
 
 const GenreComponent:NextPage = () => {
-  const utils = trpc.useContext();
   const [search, setSearch] = useState("");
-  const [items, setItems] = useState<Genre[]>([]);
-
-//   const {data} = trpc.genre.getAll.useQuery({genre:search});
   const {data} = trpc.genre.getAll.useQuery({genre:search});
-//   useEffect(() => {
-//     return () => {
-//       second
-//     }
-//   }, [third])
-  
-  const router = useRouter();
-  
-  const updateSubGenre = trpc.genre.delete.useMutation({
-    onSettled:()=>{
-     utils.genre.getAll.invalidate();
-     toast.warning(`Genre successfully deleted`);
-    }
-  });
-  const handleDelete = (id:any) =>{
-    updateSubGenre.mutate({
-        id
-    })
-  }
+
   return (
     <main className='flex flex-col w-full space-y-3'>
         <div className='flex flex-row items-center justify-between space-x-3'>
@@ -63,22 +38,7 @@ const GenreComponent:NextPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <>
-                        {data?.map((genre, i) => (
-                            <tr className="bg-white border-b" key={genre.id}>
-                                <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                    {i+1}
-                                </th>
-                                <td className=" w-10/12 py-4 px-6">
-                                    {genre.genre}
-                                </td>
-                                <td className="py-4 px-6">
-                                <Link href={`/administrator/genre/${genre.id}`} className="font-medium text-blue-600">Edit</Link>
-                                <button onClick={()=>handleDelete(genre.id)} className="font-medium text-blue-600">Remove</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </>
+                    <GenreTable items={data}/>
                 </tbody>
             </table>
         </div>

@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 
 const UpdateSubGenre: NextPage = () => {
-  return <div></div>
+  return <div>ID</div>
 }
 
 export default UpdateSubGenre

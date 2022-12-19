@@ -23,36 +23,21 @@ export const requireAuth =
     return await func(ctx);
   };
 
-export const requireAdmin =
+export const alreadyAuth =
   (func: GetServerSideProps) => async (ctx: GetServerSidePropsContext) => {
     const session = await unstable_getServerSession(
       ctx.req,
       ctx.res,
       Nextauth
     );
-    
-
-    if (!session) {
-      
+    if (session) {
       return {
         redirect: {
-          destination: "/login", // login path
+          destination: "/", // login path
           permanent: false,
         },
       };
     }
 
-    console.log(session);
-
-
-    // if (){
-    //   return {
-    //     redirect: {
-    //       destination: "/error", // login path
-    //       permanent: false,
-    //     },
-    //   };
-    // }
-    
     return await func(ctx);
 };

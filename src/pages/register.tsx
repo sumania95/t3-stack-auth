@@ -8,6 +8,18 @@ import Link from "next/link";
 import HeadCustom from "../components/HeadCustom";
 import { AiOutlineClose } from "react-icons/ai";
 import Image from "next/image";
+import { alreadyAuth } from "../server/common/requireAuth";
+import { unstable_getServerSession } from 'next-auth';
+import Nextauth from './api/auth/[...nextauth]';
+
+export const getServerSideProps = alreadyAuth(async (ctx) => {
+  const session = await unstable_getServerSession(
+    ctx.req,
+    ctx.res,
+    Nextauth
+  );
+  return { props: {} };
+});
 
 interface UserSign {
   email: string;

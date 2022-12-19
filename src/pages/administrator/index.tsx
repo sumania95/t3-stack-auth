@@ -4,7 +4,7 @@ import HeadCustom from '../../components/HeadCustom'
 
 import { requireAuth } from "../../server/common/requireAuth";
 
-export const getServerSideProps = requireAuth(async (ctx) => {
+export const getServerSideProps = requireAuth(async () => {
   return { props: {} };
 });
 function Administrator() {

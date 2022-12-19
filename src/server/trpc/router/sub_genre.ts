@@ -51,9 +51,15 @@ export const subGenreRouter = router({
     }).nullish())
     .mutation(async ({ input,ctx }) => {
       const { id } = input as { id: string };
+      const isExist = ctx.prisma.subGenre.findFirst({
+        where: {id}
+      })
+      if (!isExist) {
+        throw new Error("Genre already deleted")
+      }
       return await ctx.prisma.subGenre.delete({
         where: { id }
-        })
+      })
     }),
   gedId: publicProcedure
   .input(z.object({ 

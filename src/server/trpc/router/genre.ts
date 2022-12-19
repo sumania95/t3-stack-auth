@@ -38,6 +38,12 @@ export const genreRouter = router({
     }).nullish())
     .mutation(async ({ input,ctx }) => {
       const { id } = input as { id: string };
+      const isExist = ctx.prisma.genre.findUnique({
+        where: {id}
+      })
+      if (!isExist) {
+        throw new Error("Genre already deleted")
+      }
       return await ctx.prisma.genre.delete({
         where: {id}
       })

@@ -1,13 +1,9 @@
-import { GetServerSideProps, type NextPage } from "next";
+import { type NextPage } from "next";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { trpc } from "../utils/trpc";
 import Header from "../components/Header";
 import HeadCustom from "../components/HeadCustom";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-  const { data: session } = useSession();
   return (
     <>
       <HeadCustom title="Home"/>
@@ -43,7 +39,6 @@ const Home: NextPage = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">
-              {/* {hello.data ? hello.data.greeting : "Loading tRPC query..."} */}
             </p>
           </div>
         </div>

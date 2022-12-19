@@ -1,10 +1,7 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import HeadCustom from '../../../components/HeadCustom'
-import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
-import { toast } from 'react-toastify';
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage } from 'next'
 import Layout from '../../../components/administrator/Layout';
 
 const UpdateGenre:NextPage = () => {

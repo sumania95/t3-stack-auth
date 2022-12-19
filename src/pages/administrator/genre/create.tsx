@@ -32,7 +32,7 @@ function Create() {
       setData({
         genre: "",
       })
-      router.push("/administrator/sub-genre")
+      router.push("/administrator/genre")
     },
     onSettled:(res)=>{
       utils.genre.getAll.invalidate()

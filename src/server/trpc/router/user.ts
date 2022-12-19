@@ -5,16 +5,12 @@ import { TRPCError } from "@trpc/server";
 
 export const userRouter = router({
   me: protectedProcedure
-  .query(async({input,ctx}) =>{
-    const user = await ctx.prisma.user.findUnique({
+  .query(async({ctx}) =>{
+    return await ctx.prisma.user.findFirst({
       where:{
         email : ctx.session.user.email
       }
     })
-
-    if (user?.role !== "Admin") return false;
-    return true;
-
   }),
   
   login: publicProcedure
@@ -54,6 +50,12 @@ export const userRouter = router({
     }))
     .mutation(async ({ input, ctx }) => {
         const { email, password, firstname, lastname } = input;
+        if(!email ||!password ||!firstname ||!lastname) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Empty fields are not allowed"
+          })
+        }
         const exists = await ctx.prisma.user.findFirst({
           where: { email },
         });

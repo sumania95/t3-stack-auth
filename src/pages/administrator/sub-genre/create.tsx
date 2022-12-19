@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import { toast } from 'react-toastify';
@@ -8,7 +7,7 @@ import { requireAuth } from "../../../server/common/requireAuth";
 import Layout from '../../../components/administrator/Layout';
 import HeadCustom from '../../../components/HeadCustom';
 
-export const getServerSideProps = requireAuth(async (ctx) => {
+export const getServerSideProps = requireAuth(async () => {
     return { props: {} };
 });
 

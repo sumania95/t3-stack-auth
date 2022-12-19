@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useSession } from "next-auth/react";
 import { requireAuth } from "../../server/common/requireAuth";
 
-export const getServerSideProps = requireAuth(async (ctx) => {
+export const getServerSideProps = requireAuth(async () => {
     return { props: {} };
 });
 

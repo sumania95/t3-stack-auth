@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Menu } from '@headlessui/react'
 import { NextPage } from 'next';
 import { trpc } from '../utils/trpc';
+import { AiOutlineUser } from 'react-icons/ai';
 
 const Header:NextPage = () => {
   const {data:session} = useSession()
@@ -18,13 +19,15 @@ const Header:NextPage = () => {
         </Link>
         <div className='flex items-center justify-center space-x-3'>
             <Link href={'/'} className="hover:text-rose-600">HOME</Link>
+            <Link href={'/new-releases'} className="hover:text-rose-600">NEW RELEASES</Link>
+            <Link href={'/pricing'} className="hover:text-rose-600">PRICING</Link>
             {session? (
             <>
-                <Link href={'/new-releases'} className="hover:text-rose-600">NEW RELEASES</Link>
-                <Menu as="div" className={' relative font-light  text-left flex flex-row'}>
+                <Menu as="div" className={' relative font-light text-left flex flex-row'}>
                 {({ open }) => (
                     <>
-                    <Menu.Button className={'flex items-center justify-center'}>
+                    <Menu.Button className={'flex items-center justify-center hover:border-rose-600 hover:text-rose-600'}>
+                        <AiOutlineUser className='w-5 h-5'/>
                         {/* <Image
                             src={`https://ui-avatars.com/api/?name=${session?.user?.name}`}
                             alt={`${session?.user?.name}`}
@@ -32,7 +35,7 @@ const Header:NextPage = () => {
                             height={30}
                             className="rounded-full hover:cursor-pointer hover:border hover:text-rose-600 hover:scale-110"
                         /> */}
-                        <span className={'uppercase hover:text-rose-600 font-normal'}>{data.data?.firstname}</span>
+                        <span className={'uppercase  font-normal'}>{data.data?.firstname?data.data?.firstname:"User"}</span>
                         
                     </Menu.Button>
                     <Menu.Items className={'absolute right-0 mt-10 w-56 origin-top-right border shadow-md text-black rounded-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'}>

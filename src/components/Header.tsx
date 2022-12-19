@@ -18,9 +18,9 @@ const Header:NextPage = () => {
             </div>
         </Link>
         <div className='flex items-center justify-center space-x-3'>
-            <Link href={'/'} className="hover:text-rose-600">HOME</Link>
-            <Link href={'/new-releases'} className="hover:text-rose-600">NEW RELEASES</Link>
-            <Link href={'/pricing'} className="hover:text-rose-600">PRICING</Link>
+            <Link href={'/'} className="hover:text-rose-600">Home</Link>
+            <Link href={'/new-releases'} className="hover:text-rose-600">Record Pool</Link>
+            <Link href={'/pricing'} className="hover:text-rose-600">Pricing</Link>
             {session? (
             <>
                 <Menu as="div" className={' relative font-light text-left flex flex-row'}>
@@ -31,11 +31,11 @@ const Header:NextPage = () => {
                         {/* <Image
                             src={`https://ui-avatars.com/api/?name=${session?.user?.name}`}
                             alt={`${session?.user?.name}`}
-                            width={30}
-                            height={30}
+                            width={25}
+                            height={25}
                             className="rounded-full hover:cursor-pointer hover:border hover:text-rose-600 hover:scale-110"
                         /> */}
-                        <span className={'uppercase  font-normal'}>{data.data?.firstname?data.data?.firstname:"User"}</span>
+                        <span className={' normal-case font-normal'}>{data.data?.firstname?data.data?.firstname:"User"}</span>
                         
                     </Menu.Button>
                     <Menu.Items className={'absolute right-0 mt-10 w-56 origin-top-right border shadow-md text-black rounded-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'}>
@@ -61,7 +61,12 @@ const Header:NextPage = () => {
                 </Menu>
                 
             </>
-            ):<Link href={'/login'} className="hover:text-rose-600">LOGIN</Link>}
+            ):
+            <>
+                <Link href={'/login'} className="hover:text-rose-600">Login</Link>
+                <Link href={'/register'} className="hover:text-gray-200 px-2 font-thin py-1 border bg-gradient-to-r transition hover:scale-105 from-rose-600 to-rose-900 text-white">Get Started</Link>
+            </>
+            }
         </div>
     </div>
   )

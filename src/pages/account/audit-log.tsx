@@ -13,7 +13,7 @@ const AuditLogs = () => {
         {/* <GenreComponent/> */}
         <>
         <form  className='flex flex-col space-y-2'>
-            audit logs
+            <i>Only audit logs for the past year are displayed</i>
         </form>
         </>
     </Layout>

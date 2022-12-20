@@ -13,7 +13,7 @@ const DownloadHistory = () => {
         {/* <GenreComponent/> */}
         <>
         <form  className='flex flex-col space-y-2'>
-            download history
+            <i>Only downloads for the past year are displayed</i>
         </form>
         </>
     </Layout>

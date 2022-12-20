@@ -60,7 +60,8 @@ const User = () => {
        <HeadCustom title="Dashboard"/>
         {/* <GenreComponent/> */}
         <>
-        <form  className='flex flex-col space-y-2'>
+        <h3 className='pb-5 text-2xl'>PERSONAL INFORMATION</h3>
+        <div  className='flex flex-col space-y-2'>
             <div className='flex flex-col'>
               <label htmlFor="">EMAIL ADDRESS</label>
               <label htmlFor="" className="w-1/3 p-4 border bg-gray-50 cursor-not-allowed border-gray-500">{session?.user?.email as string}</label>
@@ -85,11 +86,35 @@ const User = () => {
                 />
               </div>
             </div>
-            <div className='flex w-1/3 space-x-2 pt-3'>
-              <button onClick={(e)=>handleSubmit(e)} type='submit' className='p-2 py-4 w-full bg-blue-600 text-white'>Save</button>
-              <button onClick={()=>alert('coming soon')} className='p-2 py-4 w-full bg-rose-600 text-white'>Change Password</button>
+            
+          </div>
+          <h3 className='py-5 text-2xl'>Change Password</h3>
+          <div  className='flex flex-col space-y-2'>
+            <div className='flex w-1/3 space-x-2'>
+              <div className='flex flex-col w-full'>
+                <label htmlFor="">Current Password</label>
+                <input 
+                  type="password" 
+                  value={''} 
+                  className="p-4 border bg-gray-50 border-gray-500"
+                  onChange={(e) => setForm({...form, firstname: e.target.value})}
+                />
+              </div>
+              <div className='flex flex-col w-full'>
+                <label htmlFor="">New Password</label>
+                <input 
+                  type="password" 
+                  value={''} 
+                  className="p-4 border bg-gray-50 border-gray-500"
+                  onChange={(e) => setForm({...form, lastname: e.target.value})}
+                />
+              </div>
             </div>
-          </form>
+            
+          </div>
+          <div className='flex w-1/3 space-x-2 pt-3'>
+            <button onClick={(e)=>handleSubmit(e)} type='submit' className='p-2 py-4 w-full bg-blue-600 text-white'>Save</button>
+          </div>
         </>
     </Layout>
   )

@@ -13,7 +13,7 @@ const BillingHistory = () => {
         {/* <GenreComponent/> */}
         <>
         <form  className='flex flex-col space-y-2'>
-            billing account
+          <i>Only billing history for the past year are displayed</i>
         </form>
         </>
     </Layout>

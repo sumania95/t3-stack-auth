@@ -4,7 +4,7 @@ import Header from "../components/Header";
 const Pricing = () => {
     return (
         <>
-        <HeadCustom title="Pricing"/>
+        <HeadCustom title="Plan"/>
         <Header />
         <main className="flex flex-col items-start justify-center p-10">
             <div className='pb-5'>

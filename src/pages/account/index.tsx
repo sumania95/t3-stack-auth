@@ -113,7 +113,7 @@ const User = () => {
             
           </div>
           <div className='flex w-1/3 space-x-2 pt-3'>
-            <button onClick={(e)=>handleSubmit(e)} type='submit' className='p-2 py-4 w-full bg-blue-600 text-white'>Save</button>
+            <button onClick={(e)=>handleSubmit(e)} type='submit' className='p-2 py-3 w-full bg-gray-800 text-white'>Save</button>
           </div>
         </>
     </Layout>

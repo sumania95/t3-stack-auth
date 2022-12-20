@@ -67,10 +67,10 @@ function Pagination({ pages, setCurrentPage }) {
 
 
   return (
-    <div className="w-full flex items-center justify-center space-x-2 mt-5">
+    <div className="w-full flex items-center justify-center space-x-1 mt-5">
       <a
         href="#"
-        className={`${currentButton === 1 ? 'hidden' : ''} px-3 py-1 rounded-full border border-gray-400`}
+        className={`${currentButton === 1 ? 'hidden' : ''} px-3 py-1 text-md`}
         onClick={() => setCurrentButton(prev => prev <= 1 ? prev : prev - 1)}
       >
         Prev
@@ -80,7 +80,7 @@ function Pagination({ pages, setCurrentPage }) {
         return <a
           href="#"
           key={index}
-          className={`${currentButton === item ? 'bg-rose-600 text-white' : ''} px-3 py-1 rounded-full border border-gray-400`}
+          className={`${currentButton === item ? 'border border-rose-600' : ''} px-3 py-1 text-md`}
           onClick={() => setCurrentButton(item)}
         >
           {item}
@@ -89,7 +89,7 @@ function Pagination({ pages, setCurrentPage }) {
 
       <a
         href="#"
-        className={`${currentButton === numberOfPages.length ? 'hidden' : ''} px-3 py-1 rounded-full border border-gray-400`}
+        className={`${currentButton === numberOfPages.length ? 'hidden' : ''} px-3 py-1 text-md`}
         onClick={() => setCurrentButton(prev => prev >= numberOfPages.length ? prev : prev + 1)}
       >
         Next

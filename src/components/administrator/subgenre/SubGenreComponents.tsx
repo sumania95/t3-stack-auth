@@ -3,15 +3,23 @@ import { trpc } from "../../../utils/trpc";
 import Link from 'next/link';
 import { NextPage } from 'next';
 import SubGenreTable from './SubGenreTable'
+import Pagination from '../../pagination/Pagination';
 
 const GenreComponent:NextPage = () => {
   const [search, setSearch] = useState("");
   const {data,isLoading} = trpc.subgenre.getAll.useQuery({sub_genre:search});
+  const [currentPage, setCurrentPage] = useState(10)
+  const [postsPerPage] = useState(10)
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = data?.slice(indexOfFirstPost, indexOfLastPost);
+  const howManyPages = Math.ceil(data?.length as number /postsPerPage);
   
   return (
     <main className='flex flex-col w-full space-y-3'>
+        <h3 className='text-lg border-b pb-2'>SUB GENRE</h3>
         <div className='flex flex-row items-center justify-between space-x-3'>
-            <Link href="/administrator/sub-genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
+            <Link href="/administrator/sub-genre/create" className='p-2 text-sm font-light bg-green-700 text-white'>ADD NEW</Link>
             <input 
                 type="search" 
                 name="search"
@@ -22,74 +30,29 @@ const GenreComponent:NextPage = () => {
                 placeholder='Search Record'
             />
         </div>
-        <div>
+        <div className=' overflow-auto'>
             <table className="w-full text-sm text-left">
                 <thead className="text-xs text-gray-50 border uppercase bg-gray-700">
                     <tr>
-                        <th className=" w-1/12 py-3 px-6">
+                        <th className="p-2">
                             #
                         </th>
-                        <th className=" w-5/12 py-3 px-6">
+                        <th className="p-2">
                             Sub Genre
                         </th>
-                        <th className=" w-5/12 py-3 px-6">
+                        <th className="p-2">
                             Genre
                         </th>
-                        <th className="py-3 px-6">
+                        <th className="p-2">
                             Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {isLoading?
-                        <tr className='border w-full'>
-                            <td colSpan={12} className="text-center w-full p-4">
-                                Loading.....
-                            </td>
-                        </tr>
-                    :
-                    <>
-                        {data?.length?
-                            <SubGenreTable items={data}/>
-                        :
-                        <tr className='border'>
-                            <td colSpan={12} className="text-center w-full p-4">No record found</td>
-                        </tr>
-                        }
-                    </>
-                    }
+                    <SubGenreTable indexOfFirstPost={indexOfFirstPost} isLoading={isLoading} items={currentPosts}/>
                 </tbody>
             </table>
-        </div>
-        <div className='flex flex-col space-y-3 items-center justify-center pt-5'>
-            <nav aria-label="Page navigation example">
-                <ul className="inline-flex -space-x-px">
-                    <li>
-                    <a href="#" className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
-                    </li>
-                    <li>
-                    <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">1</a>
-                    </li>
-                    <li>
-                    <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">2</a>
-                    </li>
-                    <li>
-                    <a href="#" aria-current="page" className="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">3</a>
-                    </li>
-                    <li>
-                    <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">4</a>
-                    </li>
-                    <li>
-                    <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">5</a>
-                    </li>
-                    <li>
-                    <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
-                    </li>
-                </ul>
-            </nav>
-            <span className="text-sm text-gray-700 dark:text-gray-400">
-                Showing <span className="font-semibold text-gray-900">1</span> to <span className="font-semibold text-gray-900">10</span> of <span className="font-semibold text-gray-900">100</span> Entries
-            </span>
+            <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>
         </div>
     </main>
   )

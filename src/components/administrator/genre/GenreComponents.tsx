@@ -9,22 +9,18 @@ import Pagination from '../../../components/pagination/Pagination'
 const GenreComponent:NextPage = () => {
   const [search, setSearch] = useState("");
   const {data,isLoading} = trpc.genre.getAll.useQuery({genre:search});
-  const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage] = useState(3)
-
+  const [currentPage, setCurrentPage] = useState(10)
+  const [postsPerPage] = useState(10)
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = data?.slice(indexOfFirstPost, indexOfLastPost);
   const howManyPages = Math.ceil(data?.length as number /postsPerPage);
 
-  console.log(howManyPages);
-
-
   return (
     <main className='flex flex-col w-full space-y-3'>
+        <h3 className='text-lg border-b pb-2'>GENRE</h3>
         <div className='flex flex-row items-center justify-between space-x-3'>
-            <Link href="/administrator/genre/create" className='p-2 bg-green-700 text-white'>ADD NEW</Link>
+            <Link href="/administrator/genre/create" className='p-2 text-sm font-light bg-green-700 text-white'>ADD NEW</Link>
             <input 
                 type="search" 
                 name="search"
@@ -35,20 +31,23 @@ const GenreComponent:NextPage = () => {
                 placeholder='Search Record'
             />
         </div>
-        <div>
+        <div className=' overflow-auto'>
             <table className="w-full text-sm text-left">
                 <thead className="text-xs text-gray-50 border uppercase bg-gray-700">
                     <tr>
-                        <th colSpan={10} className="py-2 px-6">
+                        <th className="p-2">
+                            #
+                        </th>
+                        <th className="p-2">
                             Genre
                         </th>
-                        <th colSpan={2} className="flex space-x-2">
+                        <th className="p-2">
                             Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <GenreTable isLoading={isLoading} items={currentPosts}/>
+                    <GenreTable indexOfFirstPost={indexOfFirstPost} isLoading={isLoading} items={currentPosts}/>
                 </tbody>
             </table>
             <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>

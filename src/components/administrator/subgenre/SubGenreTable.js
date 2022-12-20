@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { trpc } from "../../../utils/trpc";
 
 
-const SubGenreTable = ({items}) => {
+const SubGenreTable = ({items,isLoading,indexOfFirstPost}) => {
     const utils = trpc.useContext();
     const updateSubGenre = trpc.subgenre.delete.useMutation({
         onSettled:()=>{
@@ -17,28 +17,46 @@ const SubGenreTable = ({items}) => {
         });
         utils.subgenre.getAll.invalidate();
     }
-    return(
+    return (
         <>
-            {items?.map((item, i) => (
-                <tr className="bg-white border-b" key={item.id}>
-                    <th className=" w-1/12 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                        {i+1}
-                    </th>
-                    <td className=" w-5/12 py-4 px-6">
-                        {item.sub_genre}
+        {isLoading?
+            <tr className='border w-full'>
+                <td colSpan={12} className="text-center w-full p-4">
+                    Loading.....
+                </td>
+            </tr>
+        :
+        <>
+            {items?.length?
+             <>
+                {items?.map((item, i) => (
+                <tr className="bg-white border" key={item.id}>
+                    <td className='w-10 p-2'>{indexOfFirstPost + i + 1}</td>
+                    <td className="p-2">
+                        {item.sub_genre} 
                     </td>
-                    <td className=" w-5/12 py-4 px-6">
-                        {item.genre.genre}
+                    <td className="p-2">
+                        {item.genre.genre} 
                     </td>
-                    <td className="py-4 px-6">
-                    <Link href={`/administrator/sub-genre/${item.id}`} className="font-medium text-blue-600">Edit</Link>
-                    <button onClick={()=>handleDelete(item.id)} className="font-medium text-blue-600">Remove</button>
+                    <td className=" w-40 p-2 space-x-2">
+                        <Link href={`/administrator/sub-genre/${item.id}`} className="font-medium text-blue-600 p-2 border">Edit</Link>
+                        <button onClick={()=>handleDelete(item.id)} className="font-medium text-rose-600 p-2 border">Remove</button>
                     </td>
                 </tr>
             ))}
+             </>
+            :
+            <tr className='border'>
+                <td colSpan={12} className="text-center w-full p-4">No record found</td>
+            </tr>
+            }
+            
         </>
-
+        }
+        </>
+    
     )
+
 }
 
 export default SubGenreTable;

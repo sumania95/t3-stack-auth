@@ -7,7 +7,7 @@ import { trpc } from '../../utils/trpc';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
+import Layout from '../../components/account/Layout'
 export const getServerSideProps = requireAuth(async (ctx) => {
     return { props: {} };
 });
@@ -56,22 +56,11 @@ const User = () => {
   }
 
   return (
-    <div>
-      <HeadCustom title="Account"/>
-      <Header />
-      <main>
-        <div className='px-10 pt-10 pb-5'>
-          <h1 className=' text-2xl font-medium'>ACCOUNT</h1>
-        </div>
-        <div className='border-b border-gray-300 mx-10 mb-2'></div>
-        <div className='flex mx-10 space-x-2 pt-2'>
-            <Link href="/account" className='px-2 font-medium border border-rose-600'>Account</Link>
-            <Link href="#" className='px-2 font-medium border border-rose-600'>Billing History</Link>
-            <Link href="#" className='px-2 font-medium border border-rose-600'>Download History</Link>
-            <Link href="#" className='px-2 font-medium border border-rose-600'>Audit Logs</Link>
-        </div>
-        <div className='mx-10 pt-10'>
-          <form  className='flex flex-col space-y-2'>
+    <Layout>
+       <HeadCustom title="Dashboard"/>
+        {/* <GenreComponent/> */}
+        <>
+        <form  className='flex flex-col space-y-2'>
             <div className='flex flex-col'>
               <label htmlFor="">EMAIL ADDRESS</label>
               <label htmlFor="" className="w-1/3 p-4 border bg-gray-50 cursor-not-allowed border-gray-500">{session?.user?.email as string}</label>
@@ -101,9 +90,8 @@ const User = () => {
               <button onClick={()=>alert('coming soon')} className='p-2 py-4 w-full bg-rose-600 text-white'>Change Password</button>
             </div>
           </form>
-        </div>
-      </main>
-    </div>
+        </>
+    </Layout>
   )
 }
 

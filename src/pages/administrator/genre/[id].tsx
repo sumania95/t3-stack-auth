@@ -6,7 +6,11 @@ import Layout from '../../../components/administrator/Layout';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Image from "next/image";
+import { isAdmin } from "../../../server/common/requireAuth";
 
+export const getServerSideProps = isAdmin(async () => {
+  return { props: {} };
+});
 interface GenreData {
   id?: string;
   genre?: string;

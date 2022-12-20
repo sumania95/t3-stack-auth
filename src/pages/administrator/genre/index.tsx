@@ -8,9 +8,6 @@ export const getServerSideProps = isAdmin(async (ctx) => {
     return { props: {} };
 });
 function Genre () {
-  // const router = useRouter()
-  // const {data} = trpc.user.me.useQuery();
-  // if(!data) return router.push('/error/')
   return (
     <Layout>
        <HeadCustom title="Genre"/>

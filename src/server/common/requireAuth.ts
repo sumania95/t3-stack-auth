@@ -3,7 +3,7 @@ import { unstable_getServerSession } from "next-auth";
 import Nextauth from "../../pages/api/auth/[...nextauth]";
 import { trpc } from "../../utils/trpc";
 import { useSession } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../db/client";
 export const requireAuth =
   (func: GetServerSideProps) => async (ctx: GetServerSidePropsContext) => {
     const session = await unstable_getServerSession(
@@ -49,7 +49,14 @@ export const isEditor =
       ctx.res,
       Nextauth
     );
-    const prisma = new PrismaClient()
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/login", // login path
+          permanent: false,
+        },
+      };
+    }
     const { email } = session as {email: string};
     const data = await prisma.user.findFirst({
       where: {
@@ -81,7 +88,15 @@ export const isAdmin =
       ctx.res,
       Nextauth
     );
-    const prisma = new PrismaClient()
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/login", // login path
+          permanent: false,
+        },
+      };
+    }
+    console.log(session)
     const { email } = session as {email: string};
     const data = await prisma.user.findFirst({
       where: {

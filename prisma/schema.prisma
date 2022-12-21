@@ -32,15 +32,44 @@ model SubGenre{
   updatedAt   DateTime @updatedAt
 }
 
+model File{
+  id             String   @id @default(cuid())
+  file           String   @db.Text
+  file_preview   String?  @db.Text
+  name           String?  @db.Text
+  user           String?  @db.Text
+  duration       String?  @db.Text
+  is_video       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// model FileDescription{
+//   id             String   @id @default(cuid())
+//   file           String   @db.Text
+//   file_preview   String?  @db.Text
+//   name           String?  @db.Text
+//   user           String?  @db.Text
+//   duration       String?  @db.Text
+//   createdAt      DateTime @default(now())
+//   updatedAt      DateTime @updatedAt
+// }
+
+
+
 model User {
-  id          String   @id @default(cuid())
-  email       String   @unique
-  firstname   String?  @db.Text
-  lastname    String?  @db.Text
-  password    String   @db.Text
-  is_editor   Boolean? @default(false)
-  is_admin    Boolean? @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  email         String   @unique
+  firstname     String?  @db.Text
+  lastname      String?  @db.Text
+  password      String   @db.Text
+  is_editor     Boolean? @default(false)
+  is_admin      Boolean? @default(false)
+  vidio_credit  Int @default(0)
+  audio_credit  Int @default(0)
+  expiredAt     DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
 }
 

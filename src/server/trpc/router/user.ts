@@ -6,9 +6,12 @@ import { TRPCError } from "@trpc/server";
 export const userRouter = router({
   me: protectedProcedure
   .query(async({ctx}) =>{
+    const {email} = ctx.session.user as {
+      email: string
+    };
     return await ctx.prisma.user.findFirst({
       where:{
-        email : ctx.session.user.email
+        email
       }
     })
   }),
@@ -23,13 +26,16 @@ export const userRouter = router({
       firstname: string,
       lastname: string
     };
+    const {email} = ctx.session.user as {
+      email: string
+    };
     return await ctx.prisma.user.update({
       data:{
         firstname,
         lastname,
       },
       where:{
-        email : ctx.session.user.email
+        email
       }
     })
   }),

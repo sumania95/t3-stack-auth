@@ -26,7 +26,7 @@ const UpdateGenre:NextPage = () => {
   })
   const [form, setForm] = useState<GenreData>({
     id: GenreId,
-    genre: "",
+    genre: '',
   });
   useEffect(() => {
     try{

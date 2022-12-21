@@ -12,6 +12,11 @@ export const userRouter = router({
     return await ctx.prisma.user.findFirst({
       where:{
         email
+      },
+      select:{
+        email:true,
+        firstname:true,
+        lastname:true,
       }
     })
   }),

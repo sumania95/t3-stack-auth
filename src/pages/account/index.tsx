@@ -13,6 +13,10 @@ export const getServerSideProps = requireAuth(async (ctx) => {
 });
 
 const User = () => {
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
   const router = useRouter();
   const utils = trpc.useContext();
   const {data:session} = useSession();
@@ -28,16 +32,17 @@ const User = () => {
     })
   }, [user])
   const [isloading, setIsloading] = useState(false)
-
   const updateUser = trpc.user.update.useMutation({
     onSuccess: (data) => {
       setTimeout(()=>{ 
         toast.success("User successfully changed")
         setIsloading(false);
       }, 400);
+      utils.user.me.invalidate()
     },
     onSettled:() => {
       utils.user.me.invalidate()
+      reloadSession();
     },
     onError: (error) => {
       console.log(error)
@@ -71,7 +76,7 @@ const User = () => {
                 <label htmlFor="">First Name</label>
                 <input 
                   type="text" 
-                  value={form?.firstname} 
+                  value={form.firstname} 
                   className="p-4 border bg-gray-50 border-gray-500"
                   onChange={(e) => setForm({...form, firstname: e.target.value})}
                 />
@@ -80,7 +85,7 @@ const User = () => {
                 <label htmlFor="">Last Name</label>
                 <input 
                   type="text" 
-                  value={form?.lastname} 
+                  value={form.lastname} 
                   className="p-4 border bg-gray-50 border-gray-500"
                   onChange={(e) => setForm({...form, lastname: e.target.value})}
                 />
@@ -95,7 +100,7 @@ const User = () => {
                 <label htmlFor="">Current Password</label>
                 <input 
                   type="password" 
-                  value={''} 
+                  value={''}
                   className="p-4 border bg-gray-50 border-gray-500"
                   onChange={(e) => setForm({...form, firstname: e.target.value})}
                 />
@@ -104,7 +109,7 @@ const User = () => {
                 <label htmlFor="">New Password</label>
                 <input 
                   type="password" 
-                  value={''} 
+                  value={''}
                   className="p-4 border bg-gray-50 border-gray-500"
                   onChange={(e) => setForm({...form, lastname: e.target.value})}
                 />
@@ -113,7 +118,7 @@ const User = () => {
             
           </div>
           <div className='flex w-1/3 space-x-2 pt-3'>
-            <button onClick={(e)=>handleSubmit(e)} type='submit' className='p-2 py-3 w-full bg-gray-800 text-white'>Save</button>
+            <button onClick={(e)=>handleSubmit(e)} type='submit' className='p-2 py-3 w-full bg-gray-800 text-white hover:bg-gray-600 active:bg-gray-500'>Save</button>
           </div>
         </>
     </Layout>

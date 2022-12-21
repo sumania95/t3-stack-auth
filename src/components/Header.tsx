@@ -8,7 +8,6 @@ import { AiOutlineUser } from 'react-icons/ai';
 
 const Header:NextPage = () => {
   const {data:session} = useSession()
-  console.log(session)
   return (
     <div className='sticky top-0 z-999 bg-white shadow-md h-16 flex items-center justify-between px-5'>
         <Link href={'/'}>

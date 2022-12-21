@@ -26,6 +26,7 @@ export const userRouter = router({
       firstname: string,
       lastname: string
     };
+ 
     const {email} = ctx.session.user as {
       email: string
     };

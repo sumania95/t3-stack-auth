@@ -11,6 +11,9 @@ declare module "next-auth" {
       lastname: string | null | undefined;
       is_admin: boolean | null | undefined;
       is_editor: boolean | null | undefined;
+      video_credit: number | null | undefined;
+      audio_credit: number | null | undefined;
+      expiredAt: ISODateString | null | undefined;
     } & DefaultSession["user"];
   }
 }

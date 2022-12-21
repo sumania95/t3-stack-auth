@@ -88,6 +88,7 @@ export const isAdmin =
       ctx.res,
       Nextauth
     );
+    console.log(session);
     if (!session) {
       return {
         redirect: {
@@ -96,7 +97,6 @@ export const isAdmin =
         },
       };
     }
-    console.log(session)
     const { email } = session as {email: string};
     const data = await prisma.user.findFirst({
       where: {

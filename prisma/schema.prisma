@@ -65,7 +65,7 @@ model User {
   password      String   @db.Text
   is_editor     Boolean? @default(false)
   is_admin      Boolean? @default(false)
-  vidio_credit  Int @default(0)
+  video_credit  Int @default(0)
   audio_credit  Int @default(0)
   expiredAt     DateTime @default(now())
   createdAt     DateTime @default(now())

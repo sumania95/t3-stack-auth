@@ -88,7 +88,6 @@ export const isAdmin =
       ctx.res,
       Nextauth
     );
-    console.log(session);
     if (!session) {
       return {
         redirect: {

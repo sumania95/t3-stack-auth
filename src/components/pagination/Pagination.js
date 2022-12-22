@@ -68,32 +68,29 @@ function Pagination({ pages, setCurrentPage }) {
 
   return (
     <div className="w-full flex items-center justify-center space-x-1 mt-5">
-      <a
-        href="#"
+      <button
         className={`${currentButton === 1 ? 'hidden' : ''} px-3 py-1 text-md`}
         onClick={() => setCurrentButton(prev => prev <= 1 ? prev : prev - 1)}
       >
         Prev
-      </a>
+      </button>
 
       {arrOfCurrButtons.map(((item, index) => {
-        return <a
-          href="#"
+        return <button
           key={index}
           className={`${currentButton === item ? 'border border-rose-600' : ''} px-3 py-1 text-md`}
           onClick={() => setCurrentButton(item)}
         >
           {item}
-        </a>
+        </button>
       }))}
 
-      <a
-        href="#"
+      <button
         className={`${currentButton === numberOfPages.length ? 'hidden' : ''} px-3 py-1 text-md`}
         onClick={() => setCurrentButton(prev => prev >= numberOfPages.length ? prev : prev + 1)}
       >
         Next
-      </a>
+      </button>
     </div>
   );
 }

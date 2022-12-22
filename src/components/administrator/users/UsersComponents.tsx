@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 import { trpc } from "../../../utils/trpc";
 import Link from 'next/link';
 import { NextPage } from 'next';
-import GenreTable from '../genre/GenreTable';
+import UserTable from './UserTable';
 import Image from "next/image";
+import Record from '../../../pages/records.json'
 import Pagination from '../../pagination/Pagination'
 
 const UsersComponent:NextPage = () => {
   const [search, setSearch] = useState("");
-  const {data,isLoading} = trpc.genre.getAll.useQuery({genre:search});
+//   const {data,isLoading} = trpc.genre.getAll.useQuery({genre:search});
+  {/* @ts-ignore */}
+  const result = Record.Tracks.results
+  console.log(result)
   const [currentPage, setCurrentPage] = useState(10)
   const [postsPerPage] = useState(10)
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = data?.slice(indexOfFirstPost, indexOfLastPost);
-  const howManyPages = Math.ceil(data?.length as number /postsPerPage);
+  const currentPosts = result?.slice(indexOfFirstPost, indexOfLastPost);
+  const howManyPages = Math.ceil(result?.length as number /postsPerPage);
 
   return (
     <main className='flex flex-col w-full space-y-3'>
@@ -47,7 +51,7 @@ const UsersComponent:NextPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <GenreTable indexOfFirstPost={indexOfFirstPost} isLoading={isLoading} items={currentPosts}/>
+                    <UserTable indexOfFirstPost={indexOfFirstPost} items={currentPosts}/>
                 </tbody>
             </table>
             <Pagination pages = {howManyPages} setCurrentPage={setCurrentPage}/>

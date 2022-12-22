@@ -5,6 +5,7 @@ import HeadCustom from '../../../components/HeadCustom';
 import UsersComponent from '../../../components/administrator/users/UsersComponents';
 
 export const getServerSideProps = isAdmin(async () => {
+
     return { props: {} };
 });
 

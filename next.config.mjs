@@ -17,7 +17,7 @@ const config = {
     dirs: ['src/pages', 'src/utils'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   },
   images: {
-    domains: ['ui-avatars.com'],
+    domains: ['ui-avatars.com','https://v2-beta.crooklynclan.net'],
   },
 };
 export default config;

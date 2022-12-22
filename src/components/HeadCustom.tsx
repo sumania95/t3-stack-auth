@@ -1,7 +1,11 @@
 import React from 'react'
 import Head from "next/head";
 
-const HeadCustom = ({title}) => {
+interface HeadTitle {
+  title:string
+}
+
+const HeadCustom = ({title}:HeadTitle) => {
   const headtitle = `${title} | AV Remix Stash` 
   return (
     <div>
